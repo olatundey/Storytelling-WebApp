@@ -1,0 +1,36 @@
+body{
+    width: 100%;
+    margin: 0;
+    background-color: #363636;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+main{
+    min-height: 60vh;
+}
+
+nav>ul {
+    list-style-type: none;
+    margin-right: -70px;
+    padding: 0;
+    overflow: hidden;
+}
+
+nav>ul>li {
+    float: left;
+    padding: 20px;
+}
+
+li a:hover {
+    color: #363636;
+    text-decoration: none;
+}
+
+
+
+
+footer div ul{
+    list-style-type: none;
+    padding: 0;
+}
