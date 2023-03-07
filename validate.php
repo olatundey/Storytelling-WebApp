@@ -34,7 +34,7 @@ $psw = $_POST['password'];
 $usercategory = $_POST['UserType'];
 
 // Query the database to retrieve the user's details
-$sql = "SELECT * FROM users WHERE username = '$user' and password_key = '$psw' and UserType= '$usercategory'";
+$sql = "SELECT * FROM users WHERE username = '$user' and password_key = '$psw' and usertype= '$usercategory'";
 $result = mysqli_query($conn, $sql);
 
 // If the user is found, compare the submitted password with the password retrieved from the database
@@ -43,7 +43,7 @@ if (mysqli_num_rows($result) > 0) {
       // if ($psw == $row['password']) {
   if ($psw == $row['password_key']) {
 
-    if ($psw == $row['password_key'] && $usercategory == $row['UserType']) {
+    if ($psw == $row['password_key'] && $usercategory == $row['usertype']) {
       header('Location: adminuser.php');
         // Redirect to user home page
   } elseif ($psw == $row['password_key'] && $usercategory == "storyteller") {
@@ -59,7 +59,7 @@ if (mysqli_num_rows($result) > 0) {
     echo "Invalid password";
 }
 } else {
-  echo "Invalid username or password <br>";
+  echo "Invalid username or password or Usertype <br>";
   echo "<a href='login.html'>Return to Sign in</a>";
 }
 //Close the database connection

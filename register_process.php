@@ -20,10 +20,10 @@ $conn = mysqli_connect($servername, $username, $password, $dbname);
 
 // include("connection.php");
 
-$sql = "INSERT INTO AdminUsers (first_name,last_name,phone_number,email,username,password_key,UserType) VALUES ('$first_name','$last_name','$phone','$email','$user','$psw','$usertype')";
+$sql = "INSERT INTO users (first_name,last_name,phone_number,email,username,password_key,usertype) VALUES ('$first_name','$last_name','$phone','$email','$user','$psw','$usertype')";
 if (mysqli_query($conn, $sql)) {
   // echo "Registration successful";
-  header("Location: completed.html"); //send user back to Login page
+  header("Location: regcompleted.html"); //send user back to Login page
   exit();
 
 } else {
