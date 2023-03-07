@@ -25,7 +25,7 @@
                             <li><a href = "index.html" class="nav-item active" >Home</a></li>
                             <li><a href = "stories.php" class="nav-item">Stories</a></li>
                             <li><a href = "about.php" class="nav-item">About Us</a></li>
-                            <li><a href = "login.html" class="nav-item">Register|Login</a></li>   
+                            <li><a href = "logout.php" class="nav-item">Logout</a></li>   
                         </ul>
                     </nav>
                     </div>
@@ -35,24 +35,8 @@
         </header>
 
         <main>
-            <div>
-                <h2>Login as Admin </h2>
-                <p>Yet to create an account? <a href="register.html">Sign Up</a></p>
-                <form action="validate.php"  method="post">
-                  <label for="username">Username</label>
-                  <input type="text" id="user" name="user" required><br><br>
-                  <label for="password">Password</label>
-                  <input type="password" id="password" name="password" required><br><br>
-                  <p><select name="UserType" required>
-                    <option value="">Select Type of User</option>
-                    <option value="admin">Admin</option>
-                    <option value="storyteller">StoryTeller: Post & View Stories</option>
-                    <option value="storyseeker">StorySeeker: View Stories</option>
-                </select></p><br>
-                  <input type="submit" value="Submit">
-                </form>
-                </div>
- 
+        <p>Welcome StoryTeller, <?php print $user; ?>!</p>
+
         </main>
 
         <footer>
