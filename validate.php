@@ -34,7 +34,7 @@ $psw = $_POST['password'];
 $usercategory = $_POST['UserType'];
 
 // Query the database to retrieve the user's details
-$sql = "SELECT * FROM AdminUsers WHERE username = '$user' and password_key = '$psw' and UserType= '$usercategory'";
+$sql = "SELECT * FROM users WHERE username = '$user' and password_key = '$psw' and UserType= '$usercategory'";
 $result = mysqli_query($conn, $sql);
 
 // If the user is found, compare the submitted password with the password retrieved from the database
