@@ -43,10 +43,11 @@ if (mysqli_num_rows($result) > 0) {
       // if ($psw == $row['password']) {
   if ($psw == $row['password_key']) {
 
-    if ($usercategory == $row['usertype']) {
-      header('Location: adminuser.php');
+    // if ($usercategory == $row['usertype']) {
+    //   header('Location: adminuser.php');
         // Redirect to user home page
-  } elseif ($usercategory ==  $row['usertype']) {
+  //} 
+  if ($usercategory ==  $row['usertype']) {
       header('Location: storytelleruser.php');
   } elseif ($usercategory ==  $row['usertype']) {
       header('Location: storyseekeruser.php');

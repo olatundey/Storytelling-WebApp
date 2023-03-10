@@ -3,7 +3,7 @@ session_start();    //create or retrieve session
 if (!Isset($_SESSION["user"])) { //user name must in session to stay here
     header("Location: login.html");
 }  //if not, go back to login page
-$user = ($_SESSION['user']); //get user name into the variable $username
+$user = ($_SESSION['user']); //get user name into the variable $user
 ?>
 
 

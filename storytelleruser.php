@@ -1,3 +1,10 @@
+<?php
+session_start();    //create or retrieve session
+if (!Isset($_SESSION["user"])) { //user name must in session to stay here
+    header("Location: login.html");
+}  //if not, go back to login page
+$user = ($_SESSION['user']); //get user name into the variable $user
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -36,6 +43,31 @@
 
         <main>
         <p>Welcome StoryTeller, <?php print $user; ?>!</p>
+        <p>Upload Story:</p>
+        <form action="uploadstory.php" method="post" enctype="multipart/form-data">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name"><br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email"><br>
+
+    <label for="title">Story Title:</label>
+    <input type="text" id="title" name="title"><br>
+
+    <label for="story">Story Details:</label>
+    <textarea id="story" name="story"></textarea><br>
+
+    <label for="photo">Photo:</label>
+    <input type="file" id="photo" name="photo"><br>
+
+    <label for="video">Video:</label>
+    <input type="file" id="video" name="video"><br>
+
+    <label for="location">Location:</label>
+    <input type="text" id="location" name="location"><br>
+
+    <input type="submit" value="Submit">
+</form>
 
         </main>
 
