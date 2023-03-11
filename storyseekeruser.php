@@ -43,6 +43,8 @@ $user = ($_SESSION['user']); //get user name into the variable $user
 
         <main>
         <p>Welcome Storyseeker, <?php print $user; ?>!</p>
+        <div id="map"></div>
+
  
 
 

@@ -44,62 +44,32 @@ $user = ($_SESSION['user']); //get user name into the variable $user
 
         <main>
         <p>Welcome StoryTeller, <?php print $user; ?>!</p>
-        <p>Upload Story:</p>
-        <form action="uploadstory.php" method="post" enctype="multipart/form-data">
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name"><br>
-
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email"><br>
-
-    <label for="title">Story Title:</label>
-    <input type="text" id="title" name="title"><br>
-
-    <label for="story">Story Details:</label>
-    <textarea id="story" name="story"></textarea><br>
-
-    <label for="picture">Photo:</label>
-    <input type="file" id="picture" name="picture" accept="image/*"><br>
-
-    <label for="video">Video:</label>
-    <input type="file" id="video" name="video" accept="video/*"><br>
-
-    <label for="location">Location:</label>
-    <input type="text" id="location" name="location"><br>
-    <button onclick="openMap()">Select location</button>
-
-    <input type="submit" value="Submit">
-</form>
-
+	<h1>Thank you for submitting your story!</h1>
+	<p>Your story has been successfully uploaded</p>
+    <p>To edit Story, <a href="editstory.php">Click Here</a></p>
+	<p>Here are the details:</p>
+	<ul>
+		<li><strong>Name:</strong> <?php echo $name; ?></li>
+		<li><strong>Email:</strong> <?php echo $email; ?></li>
+        <li><strong>Title:</strong> <?php echo $title; ?></li>
+		<li><strong>Story:</strong> <?php echo $story; ?></li>
+		<li><strong>Location:</strong> <?php echo $location; ?></li>
+		<li><strong>Picture Path:</strong> <?php echo $pictureDestination; ?></li>
+		<li><strong>Video Path:</strong> <?php echo $videoDestination; ?></li>
+	</ul>
         </main>
+<footer>
+    <hr>
+    <div class="container">
+        <li><a href = "contactus.php" class="nav-item">Contact Us</a></li>   
 
-        <footer>
-            <hr>
-            <div class="container">
-                <li><a href = "contactus.php" class="nav-item">Contact Us</a></li>   
+    </div>
+</main>
+</footer>
 
-            </div>
-            
-        </footer>
-        <script>
-    function openMap() {
-        // Create the map location picker
-        var maplocator = new google.maps.places.Autocomplete(document.getElementById('location'));
-
-        // When the user selects a location, update the text input field
-        maplocator.addListener('place_changed', function() {
-            var place = maplocator.getPlace();
-            var address = maplocator.formatted_address;
-            document.getElementById('location').value = address;
-        });
-    }
-</script>
-
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-        </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
 
 </html>
-
-    
