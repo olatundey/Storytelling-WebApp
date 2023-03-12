@@ -4,7 +4,25 @@ if (!Isset($_SESSION["user"])) { //user name must in session to stay here
     header("Location: login.html");
 }  //if not, go back to login page
 $user = ($_SESSION['user']); //get user name into the variable $user
+
+// Connect to database
+    // Connect to the database
+    $servername = 'localhost';
+    $username = 'root';
+    $password = 'root';
+    $dbname = 'TouristApp';
+    
+    // Create connection
+    // $conn = mysqli_connect($servername, $username, $password, $dbname);
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Retrieve list of story IDs and names from database
+$result = $conn->query("SELECT id, name FROM stories ORDER BY id DESC");
+
+// Close database connection
+// ...
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -32,6 +50,7 @@ $user = ($_SESSION['user']); //get user name into the variable $user
                             <li><a href = "index.html" class="nav-item active" >Home</a></li>
                             <li><a href = "stories.php" class="nav-item">Stories</a></li>
                             <li><a href = "about.php" class="nav-item">About Us</a></li>
+                            <li><a href = "storytelleruser.php" class="nav-item">My Account</a></li>   
                             <li><a href = "logout.php" class="nav-item">Logout</a></li>   
                         </ul>
                     </nav>
@@ -42,7 +61,12 @@ $user = ($_SESSION['user']); //get user name into the variable $user
         </header>
 
         <main>
- 
+	<h1>Stories</h1>
+	<ul>
+        <?php while ($row = $result->fetch_assoc()): ?>
+			<li><a href="view.php?id=<?php echo $row['id']; ?>"><?php echo $row['title']; ?></a></li>
+		<?php endwhile; ?>
+	</ul>
 
         </main>
 

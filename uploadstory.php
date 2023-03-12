@@ -1,4 +1,8 @@
 <?php
+session_start();    //create or retrieve session
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 if(isset($_POST['submit'])) {
     // Get the user input values
     $name = $_POST['name'];
@@ -8,7 +12,7 @@ if(isset($_POST['submit'])) {
     $location = $_POST['location'];
 
     // Handle picture upload
-    $picture = $_FILES['photo'];
+    $picture = $_FILES['picture'];
     $pictureName = $picture['name'];
     $pictureTempName = $picture['tmp_name'];
     $pictureError = $picture['error'];
@@ -16,6 +20,13 @@ if(isset($_POST['submit'])) {
         $pictureDestination = 'uploads/pictures/' . $pictureName;
         move_uploaded_file($pictureTempName, $pictureDestination);
     }
+
+    // Get the uploaded file data
+// $imageData = file_get_contents($_FILES['picture']['tmp_name']);
+// $imageName = $_FILES['picture']['name'];
+
+// // Encode the image data to base64
+// $imageDataEncoded = base64_encode($imageData);
 
     // Handle video upload
     $video = $_FILES['video'];
@@ -48,9 +59,6 @@ $stmt->execute();
 
 // Close the connection
 $conn->close();
-
-
-    // ...
 
     // Redirect the user to a confirmation page
     header('Location: submittedstories.php');

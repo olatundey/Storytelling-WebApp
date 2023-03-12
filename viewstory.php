@@ -1,52 +1,33 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-session_start();    //create or retrieve session
 if (!Isset($_SESSION["user"])) { //user name must in session to stay here
     header("Location: login.html");
 }  //if not, go back to login page
 $user = ($_SESSION['user']); //get user name into the variable $user
 
+    // Connect to the database
+    $servername = 'localhost';
+    $username = 'root';
+    $password = 'root';
+    $dbname = 'TouristApp';
+    
+    // Create connection
+    // $conn = mysqli_connect($servername, $username, $password, $dbname);
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Retrieve story data from database
+$stmt = $conn->prepare("SELECT * FROM stories WHERE id = ?");
+$stmt->bind_param("i", $_GET['id']);
+$stmt->execute();
+$result = $stmt->get_result();
+$story = $result->fetch_assoc();
+
+// Close database connection
+// ...
 
 
-if(isset($_POST['name'])){
-    $name = $_POST['name'];
-  } else {
-    $name = "";
-  }
-  
-  if(isset($_POST['email'])){
-    $email = $_POST['email'];
-  } else {
-    $email = "";
-  }
-
-  if(isset($_POST['title'])){
-    $title = $_POST['title'];
-  } else {
-    $title = "";
-  }
-  if(isset($_POST['story'])){
-    $story = $_POST['story'];
-  } else {
-    $story = "";
-  }  if(isset($_POST['location'])){
-    $location = $_POST['location'];
-  } else {
-    $location = "";
-  }  if(isset($_POST['picture'])){
-    $pictureDestination  = $_POST['picture'];
-  } else {
-    $pictureDestination = "";
-  }
-  if(isset($_POST['video'])){
-    $videoDestination  = $_POST['video'];
-  } else {
-    $videoDestination  = "";
-  }
-  
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -86,21 +67,17 @@ if(isset($_POST['name'])){
         </header>
 
         <main>
-        <p>Welcome StoryTeller, <?php print $user; ?>!</p>
-	<h1>Thank you for submitting your story!</h1>
-	<p>Your story has been successfully uploaded</p>
-    <p>To edit Story, <a href="editstory.php">Click Here</a></p>
-	<p>Here are the details:</p>
-	<ul>
-		<li><strong>Name:</strong> <?php echo $name; ?></li>
-		<li><strong>Email:</strong> <?php echo $email; ?></li>
-        <li><strong>Title:</strong> <?php echo $title; ?></li>
-		<li><strong>Story:</strong> <?php echo $story; ?></li>
-		<li><strong>Location:</strong> <?php echo $location; ?></li>
-		<li><strong>Picture Path:</strong> <?php echo $pictureDestination; ?></li>
-		<li><strong>Video Path:</strong> <?php echo $videoDestination; ?></li>
-	</ul>
-        </main>
+	<h1><?php echo $story['name']; ?></h1>
+	<p><strong>Title:</strong> <?php echo $story['title']; ?></p>
+	<!-- <p><strong>Location:</strong> <?php echo $story['location']; ?></p> -->
+	<p><strong>Story:</strong> <?php echo $story['story']; ?></p>
+	<?php if (!empty($story['photo_path'])): ?>
+		<img src="<?php echo $story['picture_path']; ?>" alt="Photo">
+	<?php endif; ?>
+	<?php if (!empty($story['video_path'])): ?>
+		<video src="<?php echo $story['video_path']; ?>" controls></video>
+	<?php endif; ?>
+    </main>
 <footer>
     <hr>
     <div class="container">
@@ -116,3 +93,38 @@ if(isset($_POST['name'])){
 </body>
 
 </html>
+
+
+<!-- 
+<?php
+// Connect to database
+// ...
+
+// Retrieve story data from database
+$stmt = $mysqli->prepare("SELECT * FROM stories WHERE id = ?");
+$stmt->bind_param("i", $_GET['id']);
+$stmt->execute();
+$result = $stmt->get_result();
+$story = $result->fetch_assoc();
+
+// Close database connection
+// ...
+
+// Display story data in HTML format
+?>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>View Story</title>
+</head>
+<body>
+	<h1><?php echo $story['name']; ?></h1>
+	<img src="<?php echo $story['photo_path']; ?>" alt="Photo">
+	<p><strong>Email:</strong> <?php echo $story['email']; ?></p>
+	<p><strong>Location:</strong> <?php echo $story['location']; ?></p>
+	<p><strong>Story:</strong> <?php echo $story['story']; ?></p>
+	<?php if (!empty($story['video_path'])): ?>
+		<video src="<?php echo $story['video_path']; ?>" controls></video>
+	<?php endif; ?>
+</body>
+</html> -->

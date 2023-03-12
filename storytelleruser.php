@@ -33,6 +33,7 @@ $user = ($_SESSION['user']); //get user name into the variable $user
                             <li><a href = "index.html" class="nav-item active" >Home</a></li>
                             <li><a href = "stories.php" class="nav-item">Stories</a></li>
                             <li><a href = "about.php" class="nav-item">About Us</a></li>
+                            <li><a href = "storytelleruser.php" class="nav-item">My Account</a></li>   
                             <li><a href = "logout.php" class="nav-item">Logout</a></li>   
                         </ul>
                     </nav>
@@ -66,9 +67,9 @@ $user = ($_SESSION['user']); //get user name into the variable $user
 
     <label for="location">Location:</label>
     <input type="text" id="location" name="location"><br>
-    <button onclick="openMap()">Select location</button>
+    <!-- <button onclick="openMap()">Select location</button> -->
 
-    <input type="submit" value="Submit">
+    <input type="submit" value="Submit" name="submit">
 </form>
 
         </main>
@@ -82,18 +83,18 @@ $user = ($_SESSION['user']); //get user name into the variable $user
             
         </footer>
         <script>
-    function openMap() {
-        // Create the map location picker
-        var maplocator = new google.maps.places.Autocomplete(document.getElementById('location'));
+//     function openMap() {
+//         // Create the map location picker
+//         var maplocator = new google.maps.places.Autocomplete(document.getElementById('location'));
 
-        // When the user selects a location, update the text input field
-        maplocator.addListener('place_changed', function() {
-            var place = maplocator.getPlace();
-            var address = maplocator.formatted_address;
-            document.getElementById('location').value = address;
-        });
-    }
-</script>
+//         // When the user selects a location, update the text input field
+//         maplocator.addListener('place_changed', function() {
+//             var place = maplocator.getPlace();
+//             var address = maplocator.formatted_address;
+//             document.getElementById('location').value = address;
+//         });
+//     }
+// </script>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
