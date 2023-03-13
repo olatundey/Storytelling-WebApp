@@ -1,3 +1,11 @@
+<?php
+session_start();    //create or retrieve session
+if (!Isset($_SESSION["user"])) { //user name must in session to stay here
+    header("Location: stories.php");
+}  //if not, go back to login page
+$user = ($_SESSION['user']); //get user name into the variable $user
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -22,7 +30,7 @@
                     <div class="col-md-10">
                     <nav>
                         <ul class="nav justify-content-end">
-                            <li><a href = "index.html" class="nav-item active" >Home</a></li>
+                            <li><a href = "home.php" class="nav-item active" >Home</a></li>
                             <li><a href = "stories.php" class="nav-item">Stories</a></li>
                             <li><a href = "about.php" class="nav-item">About Us</a></li>
                             <li><a href = "login.html" class="nav-item">Register|Login</a></li>   
@@ -35,23 +43,6 @@
         </header>
 
         <main>
-            <div>
-                <h2>Login </h2>
-                <p>Yet to create an account? <a href="register.html">Sign Up</a></p>
-                <form action="validate.php"  method="post">
-                  <label for="username">Username</label>
-                  <input type="text" id="user" name="user" required><br><br>
-                  <label for="password">Password</label>
-                  <input type="password" id="password" name="password" required><br><br>
-                  <p><select name="UserType" required>
-                    <option value="">Select Type of User</option>
-                    <option value="admin">Admin</option>
-                    <option value="storyteller">StoryTeller: Post & View Stories</option>
-                    <option value="storyseeker">StorySeeker: View Stories</option>
-                </select></p><br>
-                  <input type="submit" value="Submit">
-                </form>
-                </div>
  
         </main>
 

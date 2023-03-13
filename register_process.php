@@ -10,15 +10,9 @@ $email = $_POST['email'];
 $user = $_POST['user'];
 $psw = $_POST['password'];
 
-$servername = 'localhost';
-$username = 'root';
-$password = 'root';
-$dbname = 'TouristApp';
-
+include_once("connection.php");
 // Create connection
-$conn = mysqli_connect($servername, $username, $password, $dbname);
-
-// include("connection.php");
+$conn = new mysqli($servername, $username, $password, $dbname);
 
 $sql = "INSERT INTO users (first_name,last_name,phone_number,email,username,password_key,usertype) VALUES ('$first_name','$last_name','$phone','$email','$user','$psw','$usertype')";
 if (mysqli_query($conn, $sql)) {

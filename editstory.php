@@ -6,14 +6,9 @@ if (!Isset($_SESSION["user"])) { //user name must in session to stay here
 $user = ($_SESSION['user']); //get user name into the variable $user
 
     // Connect to the database
-    $servername = 'localhost';
-    $username = 'root';
-    $password = 'root';
-    $dbname = 'TouristApp';
-    
+    include_once("connection.php");
     // Create connection
-    // $conn = mysqli_connect($servername, $username, $password, $dbname);
-$conn = new mysqli($servername, $username, $password, $dbname);
+    $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Retrieve story data from database
 $stmt = $conn->prepare("SELECT * FROM stories WHERE id = ?");
@@ -23,7 +18,7 @@ $result = $stmt->get_result();
 $story = $result->fetch_assoc();
 
 // Close database connection
-$conn->close();
+// $conn->close();
 
 // Display HTML form pre-populated with existing story data
 ?>
@@ -52,7 +47,7 @@ $conn->close();
                     <div class="col-md-10">
                     <nav>
                         <ul class="nav justify-content-end">
-                            <li><a href = "index.html" class="nav-item active" >Home</a></li>
+                            <li><a href = "home.php" class="nav-item active" >Home</a></li>
                             <li><a href = "stories.php" class="nav-item">Stories</a></li>
                             <li><a href = "about.php" class="nav-item">About Us</a></li>
                             <li><a href = "storytelleruser.php" class="nav-item">My Account</a></li>   

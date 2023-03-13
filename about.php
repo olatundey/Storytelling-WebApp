@@ -1,10 +1,11 @@
 <?php
 session_start();    //create or retrieve session
 if (!Isset($_SESSION["user"])) { //user name must in session to stay here
-    header("Location: login.html");
+    header("Location: index.html");
 }  //if not, go back to login page
 $user = ($_SESSION['user']); //get user name into the variable $user
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -29,7 +30,7 @@ $user = ($_SESSION['user']); //get user name into the variable $user
                     <div class="col-md-10">
                     <nav>
                         <ul class="nav justify-content-end">
-                            <li><a href = "index.html" class="nav-item active" >Home</a></li>
+                        <li><a href = "storytelleruser.php" class="nav-item">My Account</a></li>
                             <li><a href = "stories.php" class="nav-item">Stories</a></li>
                             <li><a href = "about.php" class="nav-item">About Us</a></li>
                             <li><a href = "logout.php" class="nav-item">Logout</a></li>   
@@ -42,7 +43,7 @@ $user = ($_SESSION['user']); //get user name into the variable $user
         </header>
 
         <main>
- 
+ <p>ABOUT TOURVIEW</p>
 
         </main>
 

@@ -4,6 +4,9 @@ if (!Isset($_SESSION["user"])) { //user name must in session to stay here
     header("Location: login.html");
 }  //if not, go back to login page
 $user = ($_SESSION['user']); //get user name into the variable $user
+$usercategory = ($_SESSION['userType']);
+// $userType = ($_SESSION['userType']); //get usertype into the variable $usertype
+
 ?>
 
 
@@ -31,7 +34,7 @@ $user = ($_SESSION['user']); //get user name into the variable $user
                     <div class="col-md-10">
                     <nav>
                         <ul class="nav justify-content-end">
-                            <li><a href = "index.html" class="nav-item active" >Home</a></li>
+                        <li><a href = "adminuser.php" class="nav-item">My Account</a></li>   
                             <li><a href = "stories.php" class="nav-item">Stories</a></li>
                             <li><a href = "about.php" class="nav-item">About Us</a></li>
                             <li><a href = "logout.php" class="nav-item">Logout</a></li>   

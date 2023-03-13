@@ -22,5 +22,13 @@ CREATE TABLE stories (
   story TEXT NOT NULL,
   location VARCHAR(255) NOT NULL,
   photo_path VARCHAR(255),
-  video_path VARCHAR(255)
+  video_path VARCHAR(255),
+);
+
+CREATE TABLE ratings (
+  id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  story_id INT(11) UNSIGNED NOT NULL,
+  username varchar(15) NOT NULL,
+  rating INT(11) UNSIGNED NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

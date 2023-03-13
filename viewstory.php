@@ -1,17 +1,20 @@
 <?php
-if (!Isset($_SESSION["user"])) { //user name must in session to stay here
-    header("Location: login.html");
-}  //if not, go back to login page
-$user = ($_SESSION['user']); //get user name into the variable $user
+session_start();    //create or retrieve session
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-    // Connect to the database
-    $servername = 'localhost';
-    $username = 'root';
-    $password = 'root';
-    $dbname = 'TouristApp';
-    
-    // Create connection
-    // $conn = mysqli_connect($servername, $username, $password, $dbname);
+if (!Isset($_SESSION["user"])) { //user name must in session to stay here
+    header("Location: index.html"); //if not, go back to login page
+}  
+$user = "";
+if (isset($_SESSION['user'])) {
+    $user = $_SESSION['user'];
+}
+// $user = ($_SESSION['user']); //get user name into the variable $user
+$userType = ($_SESSION['userType']); //get usertype into the variable $usertype
+
+include_once("connection.php");
+// Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Retrieve story data from database
@@ -21,8 +24,35 @@ $stmt->execute();
 $result = $stmt->get_result();
 $story = $result->fetch_assoc();
 
-// Close database connection
-// ...
+// $stmt2 = $conn->prepare("SELECT AVG(rating) AS avg_rating FROM ratings WHERE story_id = ?");
+// $stmt2->bind_param("i", $_GET['id']);
+// $stmt2->execute();
+// $result = $stmt2->get_result();
+// $rating = $result->fetch_assoc();
+// $avg_rating = $rating['avg_rating'];
+
+$hasRated = false;
+if (isset($_SESSION['user'])) {
+    $stmt3 = $conn->prepare("SELECT * FROM ratings WHERE story_id = ? AND username = ?");
+    $stmt3->bind_param("is", $_GET['id'], $_SESSION['user']);
+    $stmt3->execute();
+    $result3 = $stmt3->get_result();
+    if ($result3->num_rows > 0) {
+        $hasRated = true;
+        $rating = $result3->fetch_assoc();
+    }
+
+    $stmt2 = $conn->prepare("SELECT AVG(rating) AS avg_rating FROM ratings WHERE story_id = ?");
+    $stmt2->bind_param("i", $_GET['id']);
+    $stmt2->execute();
+    $result2 = $stmt2->get_result();
+    $avgRating = $result2->fetch_assoc()['avg_rating'];
+    // if (!empty($avgRating)) {
+    //     echo "<p><strong>Average Rating:</strong> " . round($avgRating, 1) . " stars</p>";
+    // }
+    
+}
+
 
 
 ?>
@@ -53,10 +83,9 @@ $story = $result->fetch_assoc();
                     <div class="col-md-10">
                     <nav>
                         <ul class="nav justify-content-end">
-                            <li><a href = "index.html" class="nav-item active" >Home</a></li>
+                            <li><a href = "storytelleruser.php" class="nav-item">My Account</a></li>   
                             <li><a href = "stories.php" class="nav-item">Stories</a></li>
                             <li><a href = "about.php" class="nav-item">About Us</a></li>
-                            <li><a href = "storytelleruser.php" class="nav-item">My Account</a></li>   
                             <li><a href = "logout.php" class="nav-item">Logout</a></li>   
                         </ul>
                     </nav>
@@ -67,16 +96,35 @@ $story = $result->fetch_assoc();
         </header>
 
         <main>
-	<h1><?php echo $story['name']; ?></h1>
-	<p><strong>Title:</strong> <?php echo $story['title']; ?></p>
-	<!-- <p><strong>Location:</strong> <?php echo $story['location']; ?></p> -->
+	<h1><?php echo $story['title']; ?></h1>
+    <p><strong>Average Rating:</strong> <?php echo number_format($avgRating, 1); ?> stars</p>
+	<p><strong>Story by:</strong> <?php echo $story['name']; ?></p>
+	<p><strong>Location:</strong> <?php echo $story['location']; ?></p>
 	<p><strong>Story:</strong> <?php echo $story['story']; ?></p>
-	<?php if (!empty($story['photo_path'])): ?>
+	<?php if (!empty($story['picture_path'])): ?>
 		<img src="<?php echo $story['picture_path']; ?>" alt="Photo">
 	<?php endif; ?>
 	<?php if (!empty($story['video_path'])): ?>
 		<video src="<?php echo $story['video_path']; ?>" controls></video>
 	<?php endif; ?>
+
+    <!-- form for rating -->
+    <?php if (!$hasRated): ?>
+    <form action="rating.php" method="POST">
+        <p><strong>Rate this story:</strong></p>
+        <input type="hidden" name="story_id" value="<?php echo $story['id']; ?>">
+        <input type="radio" name="rating" value="1"> 1
+        <input type="radio" name="rating" value="2"> 2
+        <input type="radio" name="rating" value="3"> 3
+        <input type="radio" name="rating" value="4"> 4
+        <input type="radio" name="rating" value="5"> 5
+        <button type="submit">Submit Rating</button>
+    </form>
+<?php else: ?>
+    <p>You have rated this story, <a href="stories.php">Click Here</a> for more Stories</p>
+<?php endif; ?>
+
+
     </main>
 <footer>
     <hr>
@@ -84,7 +132,6 @@ $story = $result->fetch_assoc();
         <li><a href = "contactus.php" class="nav-item">Contact Us</a></li>   
 
     </div>
-</main>
 </footer>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -95,36 +142,3 @@ $story = $result->fetch_assoc();
 </html>
 
 
-<!-- 
-<?php
-// Connect to database
-// ...
-
-// Retrieve story data from database
-$stmt = $mysqli->prepare("SELECT * FROM stories WHERE id = ?");
-$stmt->bind_param("i", $_GET['id']);
-$stmt->execute();
-$result = $stmt->get_result();
-$story = $result->fetch_assoc();
-
-// Close database connection
-// ...
-
-// Display story data in HTML format
-?>
-<!DOCTYPE html>
-<html>
-<head>
-	<title>View Story</title>
-</head>
-<body>
-	<h1><?php echo $story['name']; ?></h1>
-	<img src="<?php echo $story['photo_path']; ?>" alt="Photo">
-	<p><strong>Email:</strong> <?php echo $story['email']; ?></p>
-	<p><strong>Location:</strong> <?php echo $story['location']; ?></p>
-	<p><strong>Story:</strong> <?php echo $story['story']; ?></p>
-	<?php if (!empty($story['video_path'])): ?>
-		<video src="<?php echo $story['video_path']; ?>" controls></video>
-	<?php endif; ?>
-</body>
-</html> -->

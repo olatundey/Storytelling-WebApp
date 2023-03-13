@@ -40,15 +40,10 @@ if(isset($_POST['submit'])) {
 
     // Save the user input and uploaded file paths to database
     // Connect to the database
-    $servername = 'localhost';
-    $username = 'root';
-    $password = 'root';
-    $dbname = 'TouristApp';
-    
+    include_once("connection.php");
     // Create connection
-    // $conn = mysqli_connect($servername, $username, $password, $dbname);
-$conn = new mysqli($servername, $username, $password, $dbname);
-
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    
 // Prepare the SQL statement
 $stmt = $conn->prepare("INSERT INTO stories (name, email,title, story, location, picture_path, video_path) VALUES (?,?,?,?,?,?,?)");
 // Below properly format user input for insert and indicate the data types of the variables being bound to the placeholders
@@ -58,7 +53,7 @@ $stmt->bind_param("sssssss", $name, $email, $story, $title, $location, $pictureD
 $stmt->execute();
 
 // Close the connection
-$conn->close();
+// $conn->close();
 
     // Redirect the user to a confirmation page
     header('Location: submittedstories.php');

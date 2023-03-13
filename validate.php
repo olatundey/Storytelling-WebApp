@@ -17,17 +17,10 @@ if (!IsSet($_POST["user"]) || !IsSet($_POST["password"]))  // no username or pas
     exit();
 }
 
-
-$servername = 'localhost';
-$username = 'root';
-$password = 'root';
-$dbname = 'TouristApp';
-
+include_once("connection.php");
 // Create connection
-$conn = mysqli_connect($servername, $username, $password, $dbname);
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-
-// include_once("connection.php");
 
 // Retrieve the submitted email and password
 $user = $_POST['user'];
@@ -48,14 +41,17 @@ if (mysqli_num_rows($result) > 0) {
           if ($usercategory == 'admin') {
             header('Location: adminuser.php');
             $_SESSION['user'] = $user;
+            $_SESSION['userType'] = $usercategory;
             exit();
           } elseif ($usercategory == 'storyteller') {
             header('Location: storytelleruser.php');
             $_SESSION['user'] = $user;
+            $_SESSION['userType'] = $usercategory;
             exit();
           } elseif ($usercategory == 'storyseeker') {
             header('Location: storyseekeruser.php');
             $_SESSION['user'] = $user;
+            $_SESSION['userType'] = $usercategory;
             exit();
           }
         } else {
@@ -65,9 +61,10 @@ if (mysqli_num_rows($result) > 0) {
         echo "Invalid password";
       }
 } else {
+  
   echo "Invalid username or password or Usertype <br>";
   echo "<a href='login.html'>Return to Sign in</a>";
 }
 //Close the database connection
-mysqli_close($conn);
+// mysqli_close($conn);
 ?>
