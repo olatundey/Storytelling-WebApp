@@ -1,26 +1,41 @@
 <?php
 session_start();    //create or retrieve session
 if (!Isset($_SESSION["user"])) { //user name must in session to stay here
-    header("Location: login.html");
-}  //if not, go back to login page
+    header("Location: index.html"); //if not, go back to login page
+}  
 $user = ($_SESSION['user']); //get user name into the variable $user
+$usercategory = ($_SESSION['userType']);
+$userType = ($_SESSION['userType']); //get usertype into the variable $usertype
+$userID = ($_SESSION['userID']); //get userID into the variable $userID
+
 
 // Connect to database
-    // Connect to the database
-    $servername = 'localhost';
-    $username = 'root';
-    $password = 'root';
-    $dbname = 'TouristApp';
-    
-    // Create connection
-    // $conn = mysqli_connect($servername, $username, $password, $dbname);
+include_once("connection.php");
+// Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Retrieve list of story IDs and names from database
-$result = $conn->query("SELECT id, name FROM stories ORDER BY id DESC");
+$result = $conn->query("SELECT id, title FROM stories ORDER BY id DESC");
 
-// Close database connection
-// ...
+// To determine the current page number
+$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+$perPage = 10;
+$offset = ($page - 1) * $perPage;
+
+// Retrieve all stories, or only stories that match a keyword search
+if (isset($_GET['keyword'])) {
+    $keyword = $_GET['keyword'];
+    $stmt = $conn->prepare("SELECT * FROM stories WHERE title LIKE ? OR location LIKE ? ORDER BY id DESC LIMIT ?, ?");
+    $searchTerm = "%" . $keyword . "%";
+    $stmt->bind_param("ssii", $searchTerm, $searchTerm, $offset, $perPage);
+} else {
+    $stmt = $conn->prepare("SELECT * FROM stories ORDER BY id DESC LIMIT ?, ?");
+    $stmt->bind_param("ii", $offset, $perPage);
+}
+$stmt->execute();
+$result = $stmt->get_result();
+
+
 ?>
 
 <!DOCTYPE html>
@@ -47,10 +62,20 @@ $result = $conn->query("SELECT id, name FROM stories ORDER BY id DESC");
                     <div class="col-md-10">
                     <nav>
                         <ul class="nav justify-content-end">
-                            <li><a href = "index.html" class="nav-item active" >Home</a></li>
+                        <li>
+                        <?php if ($userType == "admin"): ?>
+    <a href="adminuser.php" class="nav-item">My Account</a>
+<?php elseif ($userType == "storyteller"): ?>
+    <a href="storytelleruser.php?userID=<?php echo $_SESSION['userID']; ?>" class="nav-item">My Account</a>
+<?php elseif ($userType == "storyseeker"): ?>
+    <a href="storyseekeruser.php?userID=<?php echo $_SESSION['userID']; ?>" class="nav-item">My Account</a>
+<?php endif; ?>
+
+</li>
+                            <li><a href = "adminuser.php" class="nav-item">My Account</a></li>
                             <li><a href = "stories.php" class="nav-item">Stories</a></li>
                             <li><a href = "about.php" class="nav-item">About Us</a></li>
-                            <li><a href = "storytelleruser.php" class="nav-item">My Account</a></li>   
+                            <!-- <li><a href = "storytelleruser.php" class="nav-item">My Account</a></li>    -->
                             <li><a href = "logout.php" class="nav-item">Logout</a></li>   
                         </ul>
                     </nav>
@@ -62,12 +87,28 @@ $result = $conn->query("SELECT id, name FROM stories ORDER BY id DESC");
 
         <main>
 	<h1>Stories</h1>
+    <form action="stories.php" method="GET">
+    <input type="text" name="keyword" placeholder="Enter a keyword...">
+    <button type="submit">Search</button>
+</form>
 	<ul>
         <?php while ($row = $result->fetch_assoc()): ?>
-			<li><a href="view.php?id=<?php echo $row['id']; ?>"><?php echo $row['title']; ?></a></li>
+			<li><a href="viewstory.php?id=<?php echo $row['id']; ?>"><?php echo $row['title']; ?><br></a></li>
 		<?php endwhile; ?>
+        <?php if ($result->num_rows === 0): ?>
+    <p><?php echo "No results found for '$keyword',";?> <a href="stories.php">Click Here</a> for more Stories</p>
+<?php endif; ?>
 	</ul>
 
+    <div class="pagination">
+    <?php if ($page > 1): ?>
+        <a href="?page=<?php echo $page - 1; ?>">Previous</a>
+    <?php endif; ?>
+
+    <?php if ($result->num_rows === $perPage): ?>
+        <a href="?page=<?php echo $page + 1; ?>">Next</a>
+    <?php endif; ?>
+</div>
         </main>
 
         <footer>
