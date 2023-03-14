@@ -4,6 +4,20 @@ if (!Isset($_SESSION["user"])) { //user name must in session to stay here
     header("Location: index.html");
 }  //if not, go back to login page
 $user = ($_SESSION['user']); //get user name into the variable $user
+$usercategory = ($_SESSION['userType']);
+
+// Connect to database
+include_once("connection.php");
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+$sql2 = "SELECT usertype FROM users";
+$stmt = $conn->prepare($sql2);
+$stmt->execute();
+$result2 = $stmt->get_result();
+$user_type = mysqli_fetch_assoc($result2)['usertype'];
+$stmt->close();
+
 ?>
 
 <!DOCTYPE html>
@@ -14,10 +28,10 @@ $user = ($_SESSION['user']); //get user name into the variable $user
         <meta name="viewport" content="width=device-width, initial-scale=1.0 minimum-scale=1, maximum-scale=1">
         <title>Tourview</title>
         <link rel="stylesheet" href="assets/css/style.css">
-        <link rel="stylesheet" href="unsemantic-grid-responsive-tablet.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap-theme.min.css">
-    </head>
+        <link href="https://fonts.googleapis.com/css?family=Hind:400,300|Bangers" rel="stylesheet" type="text/css">
+            </head>
 
     <body>
         <header class="container">
@@ -30,8 +44,16 @@ $user = ($_SESSION['user']); //get user name into the variable $user
                     <div class="col-md-10">
                     <nav>
                         <ul class="nav justify-content-end">
-                        <li><a href = "storytelleruser.php" class="nav-item">My Account</a></li>
-                            <li><a href = "stories.php" class="nav-item">Stories</a></li>
+                        <li>
+                        <?php if ($user_type== "admin"): ?>
+    <a href="adminuser.php" class="nav-item">My Account</a>
+<?php elseif ($user_type == "storyteller"): ?>
+    <a href="storytelleruser.php?usercategory=<?php echo $user_type; ?>" class="nav-item">My Account</a>
+<?php elseif ($user_type == "storyseeker"): ?>
+    <a href="storyseekeruser.php?usercategory=<?php echo $user_type; ?>" class="nav-item">My Account</a>
+<?php endif; ?>
+
+</li>                            <li><a href = "stories.php" class="nav-item">Stories</a></li>
                             <li><a href = "about.php" class="nav-item">About Us</a></li>
                             <li><a href = "logout.php" class="nav-item">Logout</a></li>   
                         </ul>

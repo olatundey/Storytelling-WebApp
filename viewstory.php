@@ -24,12 +24,6 @@ $stmt->execute();
 $result = $stmt->get_result();
 $story = $result->fetch_assoc();
 
-// $stmt2 = $conn->prepare("SELECT AVG(rating) AS avg_rating FROM ratings WHERE story_id = ?");
-// $stmt2->bind_param("i", $_GET['id']);
-// $stmt2->execute();
-// $result = $stmt2->get_result();
-// $rating = $result->fetch_assoc();
-// $avg_rating = $rating['avg_rating'];
 
 $hasRated = false;
 if (isset($_SESSION['user'])) {
@@ -47,9 +41,6 @@ if (isset($_SESSION['user'])) {
     $stmt2->execute();
     $result2 = $stmt2->get_result();
     $avgRating = $result2->fetch_assoc()['avg_rating'];
-    // if (!empty($avgRating)) {
-    //     echo "<p><strong>Average Rating:</strong> " . round($avgRating, 1) . " stars</p>";
-    // }
     
 }
 
@@ -77,7 +68,7 @@ if (isset($_SESSION['user'])) {
             <div class="col-md-12">
                 <div id="headerContainer" class="row">
                     <div class="col-md-2">
-                        <p>Tourview</p>
+                        <p><h1>Tourview</h1></p>
                     </div>
                 
                     <div class="col-md-10">
@@ -101,11 +92,11 @@ if (isset($_SESSION['user'])) {
 	<p><strong>Story by:</strong> <?php echo $story['name']; ?></p>
 	<p><strong>Location:</strong> <?php echo $story['location']; ?></p>
 	<p><strong>Story:</strong> <?php echo $story['story']; ?></p>
-	<?php if (!empty($story['picture_path'])): ?>
-		<img src="<?php echo $story['picture_path']; ?>" alt="Photo">
+	<?php if (!empty($story['picture_data'])): ?>
+		<img src="<?php echo $story['picture_data']; ?>" alt="Photo">
 	<?php endif; ?>
-	<?php if (!empty($story['video_path'])): ?>
-		<video src="<?php echo $story['video_path']; ?>" controls></video>
+	<?php if (!empty($story['video_data'])): ?>
+		<video src="<?php echo $story['video_data']; ?>" controls></video>
 	<?php endif; ?>
 
     <!-- form for rating -->

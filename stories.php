@@ -1,12 +1,14 @@
 <?php
 session_start();    //create or retrieve session
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 if (!Isset($_SESSION["user"])) { //user name must in session to stay here
     header("Location: index.html"); //if not, go back to login page
 }  
 $user = ($_SESSION['user']); //get user name into the variable $user
 $usercategory = ($_SESSION['userType']);
-$userType = ($_SESSION['userType']); //get usertype into the variable $usertype
-$userID = ($_SESSION['userID']); //get userID into the variable $userID
 
 
 // Connect to database
@@ -14,7 +16,14 @@ include_once("connection.php");
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Retrieve list of story IDs and names from database
+$sql2 = "SELECT usertype FROM users";
+$stmt = $conn->prepare($sql2);
+$stmt->execute();
+$result2 = $stmt->get_result();
+$user_type = mysqli_fetch_assoc($result2)['usertype'];
+$stmt->close();
+
+// Retrieve list of story IDs and title from database
 $result = $conn->query("SELECT id, title FROM stories ORDER BY id DESC");
 
 // To determine the current page number
@@ -46,10 +55,10 @@ $result = $stmt->get_result();
         <meta name="viewport" content="width=device-width, initial-scale=1.0 minimum-scale=1, maximum-scale=1">
         <title>Tourview</title>
         <link rel="stylesheet" href="assets/css/style.css">
-        <link rel="stylesheet" href="unsemantic-grid-responsive-tablet.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap-theme.min.css">
-    </head>
+        <link href="https://fonts.googleapis.com/css?family=Hind:400,300|Bangers" rel="stylesheet" type="text/css">
+            </head>
 
     <body>
         <header class="container">
@@ -61,21 +70,19 @@ $result = $stmt->get_result();
                 
                     <div class="col-md-10">
                     <nav>
-                        <ul class="nav justify-content-end">
+                    <ul class="nav justify-content-end">
                         <li>
-                        <?php if ($userType == "admin"): ?>
-    <a href="adminuser.php" class="nav-item">My Account</a>
-<?php elseif ($userType == "storyteller"): ?>
-    <a href="storytelleruser.php?userID=<?php echo $_SESSION['userID']; ?>" class="nav-item">My Account</a>
-<?php elseif ($userType == "storyseeker"): ?>
-    <a href="storyseekeruser.php?userID=<?php echo $_SESSION['userID']; ?>" class="nav-item">My Account</a>
+                        <?php if ($user_type== "admin"): ?>
+    <a href="storytelleruser.php" class="nav-item">My Account</a>
+<?php elseif ($user_type == "storyteller"): ?>
+    <a href="storytelleruser.php?usercategory=<?php echo $user_type; ?>" class="nav-item">My Account</a>
+<?php elseif ($user_type == "storyseeker"): ?>
+    <a href="storyseekeruser.php?usercategory=<?php echo $user_type; ?>" class="nav-item">My Account</a>
 <?php endif; ?>
 
 </li>
-                            <li><a href = "adminuser.php" class="nav-item">My Account</a></li>
                             <li><a href = "stories.php" class="nav-item">Stories</a></li>
                             <li><a href = "about.php" class="nav-item">About Us</a></li>
-                            <!-- <li><a href = "storytelleruser.php" class="nav-item">My Account</a></li>    -->
                             <li><a href = "logout.php" class="nav-item">Logout</a></li>   
                         </ul>
                     </nav>
@@ -91,14 +98,15 @@ $result = $stmt->get_result();
     <input type="text" name="keyword" placeholder="Enter a keyword...">
     <button type="submit">Search</button>
 </form>
-	<ul>
+	<div>
         <?php while ($row = $result->fetch_assoc()): ?>
 			<li><a href="viewstory.php?id=<?php echo $row['id']; ?>"><?php echo $row['title']; ?><br></a></li>
 		<?php endwhile; ?>
         <?php if ($result->num_rows === 0): ?>
     <p><?php echo "No results found for '$keyword',";?> <a href="stories.php">Click Here</a> for more Stories</p>
 <?php endif; ?>
-	</ul>
+        </div>
+        
 
     <div class="pagination">
     <?php if ($page > 1): ?>

@@ -7,6 +7,38 @@ $user = ($_SESSION['user']); //get user name into the variable $user
 $usercategory = ($_SESSION['userType']);
 // $userType = ($_SESSION['userType']); //get usertype into the variable $usertype
 
+
+include_once("connection.php");
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+$sql = "SELECT uid, first_name, last_name, phone_number, email, username, usertype
+        FROM users order by uid DESC";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$allusers = $stmt->get_result();
+$stmt->close();
+
+$sql2 = "SELECT count(*) as Storiescount FROM stories";
+$stmt = $conn->prepare($sql2);
+$stmt->execute();
+$result2 = $stmt->get_result();
+$storiescount = mysqli_fetch_assoc($result2)['Storiescount'];
+$stmt->close();
+
+$sql3 = "SELECT count(*) as Tellercount FROM users where usertype = 'storyteller'";
+$stmt = $conn->prepare($sql3);
+$stmt->execute();
+$result3 = $stmt->get_result();
+$storytellercount = mysqli_fetch_assoc($result3)['Tellercount'];
+$stmt->close();
+
+// $sql4 = "SELECT name,email,title,location FROM stories";
+// $stmt = $conn->prepare($sql4);
+// $stmt->execute();
+// $result4 = $stmt->get_result();
+// $stmt->close();
+
 ?>
 
 
@@ -18,10 +50,10 @@ $usercategory = ($_SESSION['userType']);
         <meta name="viewport" content="width=device-width, initial-scale=1.0 minimum-scale=1, maximum-scale=1">
         <title>Tourview</title>
         <link rel="stylesheet" href="assets/css/style.css">
-        <link rel="stylesheet" href="unsemantic-grid-responsive-tablet.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap-theme.min.css">
-    </head>
+        <link href="https://fonts.googleapis.com/css?family=Hind:400,300|Bangers" rel="stylesheet" type="text/css">
+            </head>
 
     <body>
         <header class="container">
@@ -47,7 +79,47 @@ $usercategory = ($_SESSION['userType']);
         </header>
 
         <main>
-        <p>Welcome Admin, <?php print $user; ?>!</p>
+        <p>Welcome Admin, <?php echo $user; ?>!</p>
+
+        <div>
+            <p>Number of stories is: <?php echo $storiescount; ?></p>
+        </div>
+
+        <div>
+            <p>Number of storyteller is: <?php echo $storytellercount; ?></p>
+        </div>
+
+        <div>
+            <p>Registered Users:</p>
+            <table>
+    <tr>
+        <th>User ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Phone Number</th>
+        <th>Email</th>
+        <th>Username</th>
+        <th>User Type</th>
+    </tr>
+                <?php while ($row = $allusers->fetch_assoc()) { ?>
+                <tr>
+                    <td><?php echo $row['uid']; ?></td>
+                    <td><?php echo $row['first_name']; ?></td>
+                    <td><?php echo $row['last_name']; ?></td>
+                    <td><?php echo $row['phone_number']; ?></td>
+                    <td><?php echo $row['email']; ?></td>
+                    <td><?php echo $row['username']; ?></td>
+                    <td><?php echo $row['usertype']; ?></td>
+    </tr>
+    <?php } ?>
+</table>
+
+        </div>
+
+        <!-- <div>
+            <p>Manage Stories: $result4</p>
+
+        </div> -->
 
  
         </main>
@@ -67,5 +139,3 @@ $usercategory = ($_SESSION['userType']);
         </body>
 
 </html>
-
-    

@@ -21,8 +21,10 @@ CREATE TABLE stories (
   title VARCHAR(255) NOT NULL,
   story TEXT NOT NULL,
   location VARCHAR(255) NOT NULL,
-  photo_path VARCHAR(255),
-  video_path VARCHAR(255),
+  picture_data BLOB,
+  video_data BLOB,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
 );
 
 CREATE TABLE ratings (

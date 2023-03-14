@@ -1,8 +1,8 @@
 <?php
+session_start();   //start a session here in case user login successfully
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-
-session_start();   //start a session here in case user login successfully
 
 if (!IsSet($_POST))    //if no $_POST array
 {
