@@ -86,7 +86,7 @@ $stmt->close();
         </div>
 
         <div>
-            <p>Number of storyteller is: <?php echo $storytellercount; ?></p>
+            <p>Number of storyteller(s) is: <?php echo $storytellercount; ?></p>
         </div>
 
         <div>

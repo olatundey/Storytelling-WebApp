@@ -3,27 +3,13 @@ session_start();    //create or retrieve session
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-if (!Isset($_SESSION["user"])) { //user name must in session to stay here
-    header("Location: index.html"); //if not, go back to login page
-}  
-$user = "";
-if (isset($_SESSION['user'])) {
-    $user = $_SESSION['user'];
-}
-// $user = ($_SESSION['user']); //get user name into the variable $user
-$userType = ($_SESSION['userType']); //get usertype into the variable $usertype
-
 include_once("connection.php");
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Retrieve story data from database
-$stmt = $conn->prepare("SELECT * FROM stories WHERE id = ?");
-$stmt->bind_param("i", $_GET['id']);
-$stmt->execute();
-$result = $stmt->get_result();
-$story = $result->fetch_assoc();
-
+if (Isset($_SESSION["user"])) { //user name must in session to stay here
+    $user = ($_SESSION['user']); //get user name into the variable $user
+$usercategory = ($_SESSION['userType']);
 
 $hasRated = false;
 if (isset($_SESSION['user'])) {
@@ -43,6 +29,17 @@ if (isset($_SESSION['user'])) {
     $avgRating = $result2->fetch_assoc()['avg_rating'];
     
 }
+}  
+
+
+
+// Retrieve story data from database
+$stmt = $conn->prepare("SELECT * FROM stories WHERE id = ?");
+$stmt->bind_param("i", $_GET['id']);
+$stmt->execute();
+$result = $stmt->get_result();
+$story = $result->fetch_assoc();
+
 
 
 
@@ -74,11 +71,26 @@ if (isset($_SESSION['user'])) {
                     <div class="col-md-10">
                     <nav>
                         <ul class="nav justify-content-end">
-                            <li><a href = "storytelleruser.php" class="nav-item">My Account</a></li>   
-                            <li><a href = "stories.php" class="nav-item">Stories</a></li>
-                            <li><a href = "about.php" class="nav-item">About Us</a></li>
-                            <li><a href = "logout.php" class="nav-item">Logout</a></li>   
-                        </ul>
+                        <?php if (isset($_SESSION["user"])) { ?>
+        <li>
+            <?php if ($usercategory == "admin"): ?>
+                <a href="adminuser.php" class="nav-item">My Account</a>
+            <?php elseif ($usercategory == "storyteller"): ?>
+                <a href="storytelleruser.php?usercategory=<?php echo $usercategory; ?>" class="nav-item">My Account</a>
+            <?php elseif ($usercategory == "storyseeker"): ?>
+                <a href="storyseekeruser.php?usercategory=<?php echo $usercategory; ?>" class="nav-item">My Account</a>
+            <?php endif; ?>
+        </li>
+        <li><a href="stories.php" class="nav-item">Stories</a></li>
+        <li><a href="about.php" class="nav-item">About Us</a></li>
+        <li><a href="logout.php" class="nav-item">Logout</a></li>
+    <?php } else { ?>
+        <li><a href="index.html" class="nav-item active">Home</a></li>
+        <li><a href="stories.php" class="nav-item">Stories</a></li>
+        <li><a href="about.php" class="nav-item">About Us</a></li>
+        <li><a href="login.html" class="nav-item">Register|Login</a></li>
+    <?php } ?>
+</ul>
                     </nav>
                     </div>
                 </div>    
@@ -87,18 +99,22 @@ if (isset($_SESSION['user'])) {
         </header>
 
         <main>
-	<h1><?php echo $story['title']; ?></h1>
+	<h2><?php echo $story['story_title']; ?></h2>
+    <?php if(isset($_SESSION['user'])) { ?>
     <p><strong>Average Rating:</strong> <?php echo number_format($avgRating, 1); ?> stars</p>
-	<p><strong>Story by:</strong> <?php echo $story['name']; ?></p>
+    <?php } ?>
+	<p><strong>Story Source:</strong> <?php echo $story['source_name']; ?></p>
+    <p><strong>Story Title:</strong> <?php echo $story['story_title']; ?></p>
 	<p><strong>Location:</strong> <?php echo $story['location']; ?></p>
-	<p><strong>Story:</strong> <?php echo $story['story']; ?></p>
-	<?php if (!empty($story['picture_data'])): ?>
+	<p><strong>Story description:</strong> <?php echo $story['description']; ?></p>
+	<p>Picture:<?php if (!empty($story['picture_data'])): ?>
 		<img src="<?php echo $story['picture_data']; ?>" alt="Photo">
-	<?php endif; ?>
-	<?php if (!empty($story['video_data'])): ?>
+	<?php endif; ?></p>
+	<p>Video:<?php if (!empty($story['video_data'])): ?>
 		<video src="<?php echo $story['video_data']; ?>" controls></video>
-	<?php endif; ?>
+	<?php endif; ?></p>
 
+    <?php if (isset($_SESSION["user"])) { ?>
     <!-- form for rating -->
     <?php if (!$hasRated): ?>
     <form action="rating.php" method="POST">
@@ -114,7 +130,7 @@ if (isset($_SESSION['user'])) {
 <?php else: ?>
     <p>You have rated this story, <a href="stories.php">Click Here</a> for more Stories</p>
 <?php endif; ?>
-
+<?php } ?>
 
     </main>
 <footer>

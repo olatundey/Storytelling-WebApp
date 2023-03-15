@@ -51,31 +51,40 @@ $usercategory = ($_SESSION['userType']);
         <p>Welcome StoryTeller, <?php print $user; ?>!</p>
         <p>Upload Story:</p>
         <form action="uploadstory.php" method="post" enctype="multipart/form-data">
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name"><br>
-
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email"><br>
+    <label for="name">Story Source:</label>
+    <input type="text" id="source_name" name="source_name" required><br>
 
     <label for="title">Story Title:</label>
-    <input type="text" id="title" name="title"><br>
+    <input type="text" id="story_title" name="story_title" required><br>
 
-    <label for="story">Story Details:</label>
-    <textarea id="story" name="story"></textarea><br>
+    <label for="story">Story Description:</label>
+    <textarea id="description" name="description" required></textarea><br>
 
     <label for="picture">Photo:</label>
-    <input type="file" id="picture" name="picture" accept="image/*"><br>
+    <input type="file" id="picture" name="picture" accept="image/*" required><br>
 
     <label for="video">Video:</label>
     <input type="file" id="video" name="video" accept="video/*"><br>
 
     <label for="location">Location:</label>
-    <input type="text" id="location" name="location"><br>
+    <input type="text" id="location" name="location" required><br>
     <!-- <button onclick="openMap()">Select location</button> -->
+
+    <label for="latitude">Latitude:</label>
+    <input type="number" id="latitude" name="latitude" step="0.00000001" ><br>
+
+    <label for="longitude">Longitude:</label>
+    <input type="number" id="longitude" name="longitude" step="0.00000001" ><br>
+
+    <label for="category">Category:</label>
+    <!-- <input type="radio" name="storycategory" value="Any"> Any -->
+        <input type="radio" name="storycategory" value="Places" required> Places
+        <input type="radio" name="storycategory" value="Museum" required> Museum
+        <input type="radio" name="storycategory" value="Other" required> Other <br>
+
 
     <input type="submit" value="Submit" name="submit">
 </form>
-
         </main>
 
         <footer>

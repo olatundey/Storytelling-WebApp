@@ -4,24 +4,17 @@ session_start();    //create or retrieve session
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-if (!Isset($_SESSION["user"])) { //user name must in session to stay here
-    header("Location: index.html"); //if not, go back to login page
-}  
-$user = ($_SESSION['user']); //get user name into the variable $user
+if (Isset($_SESSION["user"])) { //user name must in session to stay here
+    $user = ($_SESSION['user']); //get user name into the variable $user
 $usercategory = ($_SESSION['userType']);
+}  
+
 
 
 // Connect to database
 include_once("connection.php");
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
-
-$sql2 = "SELECT usertype FROM users";
-$stmt = $conn->prepare($sql2);
-$stmt->execute();
-$result2 = $stmt->get_result();
-$user_type = mysqli_fetch_assoc($result2)['usertype'];
-$stmt->close();
 
 // Retrieve list of story IDs and title from database
 $result = $conn->query("SELECT id, title FROM stories ORDER BY id DESC");
@@ -43,7 +36,6 @@ if (isset($_GET['keyword'])) {
 }
 $stmt->execute();
 $result = $stmt->get_result();
-
 
 ?>
 
@@ -71,20 +63,27 @@ $result = $stmt->get_result();
                     <div class="col-md-10">
                     <nav>
                     <ul class="nav justify-content-end">
-                        <li>
-                        <?php if ($user_type== "admin"): ?>
-    <a href="storytelleruser.php" class="nav-item">My Account</a>
-<?php elseif ($user_type == "storyteller"): ?>
-    <a href="storytelleruser.php?usercategory=<?php echo $user_type; ?>" class="nav-item">My Account</a>
-<?php elseif ($user_type == "storyseeker"): ?>
-    <a href="storyseekeruser.php?usercategory=<?php echo $user_type; ?>" class="nav-item">My Account</a>
-<?php endif; ?>
+    <?php if (isset($_SESSION["user"])) { ?>
+        <li>
+            <?php if ($usercategory == "admin"): ?>
+                <a href="adminuser.php" class="nav-item">My Account</a>
+            <?php elseif ($usercategory == "storyteller"): ?>
+                <a href="storytelleruser.php?usercategory=<?php echo $usercategory; ?>" class="nav-item">My Account</a>
+            <?php elseif ($usercategory == "storyseeker"): ?>
+                <a href="storyseekeruser.php?usercategory=<?php echo $usercategory; ?>" class="nav-item">My Account</a>
+            <?php endif; ?>
+        </li>
+        <li><a href="stories.php" class="nav-item">Stories</a></li>
+        <li><a href="about.php" class="nav-item">About Us</a></li>
+        <li><a href="logout.php" class="nav-item">Logout</a></li>
+    <?php } else { ?>
+        <li><a href="index.html" class="nav-item active">Home</a></li>
+        <li><a href="stories.php" class="nav-item">Stories</a></li>
+        <li><a href="about.php" class="nav-item">About Us</a></li>
+        <li><a href="login.html" class="nav-item">Register|Login</a></li>
+    <?php } ?>
+</ul>
 
-</li>
-                            <li><a href = "stories.php" class="nav-item">Stories</a></li>
-                            <li><a href = "about.php" class="nav-item">About Us</a></li>
-                            <li><a href = "logout.php" class="nav-item">Logout</a></li>   
-                        </ul>
                     </nav>
                     </div>
                 </div>    
@@ -100,21 +99,23 @@ $result = $stmt->get_result();
 </form>
 	<div>
         <?php while ($row = $result->fetch_assoc()): ?>
-			<li><a href="viewstory.php?id=<?php echo $row['id']; ?>"><?php echo $row['title']; ?><br></a></li>
+			<li><a href="viewstory.php?id=<?php echo $row['id']; ?>"><?php echo $row['story_title']; ?><br></a></li>
 		<?php endwhile; ?>
+    </div>
+    <div>
         <?php if ($result->num_rows === 0): ?>
     <p><?php echo "No results found for '$keyword',";?> <a href="stories.php">Click Here</a> for more Stories</p>
 <?php endif; ?>
         </div>
         
 
-    <div class="pagination">
+        <div class="pagination">
     <?php if ($page > 1): ?>
-        <a href="?page=<?php echo $page - 1; ?>">Previous</a>
+        <a href="?page=<?php echo $page - 1; ?>">Previous Page</a>
     <?php endif; ?>
 
     <?php if ($result->num_rows === $perPage): ?>
-        <a href="?page=<?php echo $page + 1; ?>">Next</a>
+        <a href="?page=<?php echo $page + 1; ?>">Next Page</a>
     <?php endif; ?>
 </div>
         </main>

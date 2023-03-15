@@ -1,10 +1,10 @@
 <?php
 session_start();    //create or retrieve session
-if (!Isset($_SESSION["user"])) { //user name must in session to stay here
-    header("Location: index.html");
-}  //if not, go back to login page
-$user = ($_SESSION['user']); //get user name into the variable $user
+if (Isset($_SESSION["user"])) { //user name must in session to stay here
+    $user = ($_SESSION['user']); //get user name into the variable $user
 $usercategory = ($_SESSION['userType']);
+    // header("Location: index.html"); //if not, go back to login page
+}  
 
 // Connect to database
 include_once("connection.php");
@@ -43,20 +43,27 @@ $stmt->close();
                 
                     <div class="col-md-10">
                     <nav>
-                        <ul class="nav justify-content-end">
-                        <li>
-                        <?php if ($user_type== "admin"): ?>
-    <a href="adminuser.php" class="nav-item">My Account</a>
-<?php elseif ($user_type == "storyteller"): ?>
-    <a href="storytelleruser.php?usercategory=<?php echo $user_type; ?>" class="nav-item">My Account</a>
-<?php elseif ($user_type == "storyseeker"): ?>
-    <a href="storyseekeruser.php?usercategory=<?php echo $user_type; ?>" class="nav-item">My Account</a>
-<?php endif; ?>
-
-</li>                            <li><a href = "stories.php" class="nav-item">Stories</a></li>
-                            <li><a href = "about.php" class="nav-item">About Us</a></li>
-                            <li><a href = "logout.php" class="nav-item">Logout</a></li>   
-                        </ul>
+                    <ul class="nav justify-content-end">
+    <?php if (isset($_SESSION["user"])) { ?>
+        <li>
+            <?php if ($usercategory == "admin"): ?>
+                <a href="adminuser.php" class="nav-item">My Account</a>
+            <?php elseif ($usercategory == "storyteller"): ?>
+                <a href="storytelleruser.php?usercategory=<?php echo $usercategory; ?>" class="nav-item">My Account</a>
+            <?php elseif ($usercategory == "storyseeker"): ?>
+                <a href="storyseekeruser.php?usercategory=<?php echo $usercategory; ?>" class="nav-item">My Account</a>
+            <?php endif; ?>
+        </li>
+        <li><a href="stories.php" class="nav-item">Stories</a></li>
+        <li><a href="about.php" class="nav-item">About Us</a></li>
+        <li><a href="logout.php" class="nav-item">Logout</a></li>
+    <?php } else { ?>
+        <li><a href="index.html" class="nav-item active">Home</a></li>
+        <li><a href="stories.php" class="nav-item">Stories</a></li>
+        <li><a href="about.php" class="nav-item">About Us</a></li>
+        <li><a href="login.html" class="nav-item">Register|Login</a></li>
+    <?php } ?>
+</ul>
                     </nav>
                     </div>
                 </div>    
