@@ -22,6 +22,8 @@ $usercategory = ($_SESSION['userType']);
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap-theme.min.css">
         <link href="https://fonts.googleapis.com/css?family=Hind:400,300|Bangers" rel="stylesheet" type="text/css">
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3oeQSbb4oNhgeNqTBrdMlqyFSPD9Hg7s&callback=initMap"
+    async defer></script>
             </head>
 
     <body>
@@ -46,7 +48,7 @@ $usercategory = ($_SESSION['userType']);
             </div>
 
         </header>
-
+        <hr>
         <main>
         <p>Welcome StoryTeller, <?php print $user; ?>!</p>
         <p>Upload Story:</p>
@@ -71,10 +73,10 @@ $usercategory = ($_SESSION['userType']);
     <!-- <button onclick="openMap()">Select location</button> -->
 
     <label for="latitude">Latitude:</label>
-    <input type="number" id="latitude" name="latitude" step="0.00000001" ><br>
+    <input type="number" id="latitude" name="latitude" step="0.00000001" placeholder="Latitude(+N,-S)"><br>
 
     <label for="longitude">Longitude:</label>
-    <input type="number" id="longitude" name="longitude" step="0.00000001" ><br>
+    <input type="number" id="longitude" name="longitude" step="0.00000001" placeholder="Longitude (-W,+E)"><br>
 
     <label for="category">Category:</label>
     <!-- <input type="radio" name="storycategory" value="Any"> Any -->
@@ -95,20 +97,6 @@ $usercategory = ($_SESSION['userType']);
             </div>
             
         </footer>
-        <script>
-//     function openMap() {
-//         // Create the map location picker
-//         var maplocator = new google.maps.places.Autocomplete(document.getElementById('location'));
-
-//         // When the user selects a location, update the text input field
-//         maplocator.addListener('place_changed', function() {
-//             var place = maplocator.getPlace();
-//             var address = maplocator.formatted_address;
-//             document.getElementById('location').value = address;
-//         });
-//     }
-// </script>
-
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>

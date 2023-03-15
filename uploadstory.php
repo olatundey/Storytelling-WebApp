@@ -3,8 +3,10 @@ session_start();    //create or retrieve session
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-    $user = ($_SESSION['user']); //get user name into the variable $user
+$user = ($_SESSION['user']); //get user name into the variable $user
 $usercategory = ($_SESSION['userType']);
+$latitude = $_POST['latitude'];
+$longitude = $_POST['longitude'];
 
 if(isset($_POST['submit'])) {
     // Get the user input values
@@ -56,6 +58,7 @@ $stmt->execute();
     // Redirect the user to a confirmation page
     header('Location: submittedstories.php');
     exit();
+
 }
 ?>
 

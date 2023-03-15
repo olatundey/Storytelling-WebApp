@@ -4,6 +4,7 @@ session_start();    //create or retrieve session
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+
 if (Isset($_SESSION["user"])) { //user name must in session to stay here
     $user = ($_SESSION['user']); //get user name into the variable $user
 $usercategory = ($_SESSION['userType']);
@@ -27,9 +28,9 @@ $offset = ($page - 1) * $perPage;
 // Retrieve all stories, or only stories that match a keyword search
 if (isset($_GET['keyword'])) {
     $keyword = $_GET['keyword'];
-    $stmt = $conn->prepare("SELECT * FROM stories WHERE title LIKE ? OR location LIKE ? ORDER BY id DESC LIMIT ?, ?");
+    $stmt = $conn->prepare("SELECT * FROM stories WHERE story_title LIKE ? OR location LIKE ? OR category LIKE ? ORDER BY id DESC LIMIT ?, ?");
     $searchTerm = "%" . $keyword . "%";
-    $stmt->bind_param("ssii", $searchTerm, $searchTerm, $offset, $perPage);
+    $stmt->bind_param("sssii", $searchTerm, $searchTerm, $searchTerm, $offset, $perPage);
 } else {
     $stmt = $conn->prepare("SELECT * FROM stories ORDER BY id DESC LIMIT ?, ?");
     $stmt->bind_param("ii", $offset, $perPage);
@@ -51,7 +52,6 @@ $result = $stmt->get_result();
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap-theme.min.css">
         <link href="https://fonts.googleapis.com/css?family=Hind:400,300|Bangers" rel="stylesheet" type="text/css">
             </head>
-
     <body>
         <header class="container">
             <div class="col-md-12">
@@ -90,9 +90,13 @@ $result = $stmt->get_result();
             </div>
 
         </header>
-
+<hr>
         <main>
 	<h1>Stories</h1>
+<?php if(isset($_SESSION['user'])) { ?>
+<p><strong>Hello!</strong> <?php echo $user; ?></p>
+<?php } ?>
+<div><p>Top rated Stories:<a href="toprated.php">Click Here</p></div>
     <form action="stories.php" method="GET">
     <input type="text" name="keyword" placeholder="Enter a keyword...">
     <button type="submit">Search</button>

@@ -43,7 +43,7 @@ $usercategory = ($_SESSION['userType']);
             </div>
 
         </header>
-
+        <hr>
         <main>
         <p>Welcome Storyseeker, <?php print $user; ?>!</p>
         <div id="map"></div>

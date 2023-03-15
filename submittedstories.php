@@ -85,7 +85,7 @@ if(isset($_POST['name'])){
             </div>
 
         </header>
-
+        <hr>
         <main>
         <p>Welcome StoryTeller, <?php print $user; ?>!</p>
 	<h1>Thank you for submitting your story!</h1>

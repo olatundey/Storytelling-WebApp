@@ -77,7 +77,7 @@ $stmt->close();
             </div>
 
         </header>
-
+        <hr>
         <main>
         <p>Welcome Admin, <?php echo $user; ?>!</p>
 

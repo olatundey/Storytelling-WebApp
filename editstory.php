@@ -58,7 +58,7 @@ $story = $result->fetch_assoc();
             </div>
 
         </header>
-
+        <hr>
         <main>
         <p>Welcome StoryTeller, <?php print $user; ?>!</p>
 	<h1>Edit Your Story</h1>

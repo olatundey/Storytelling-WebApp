@@ -71,7 +71,7 @@ $stmt->close();
             </div>
 
         </header>
-
+        <hr>
         <main>
         <h1 style="text-align: center;">Customer Feedback</h1>
         <form class="contactinfo" action="#" method="post">

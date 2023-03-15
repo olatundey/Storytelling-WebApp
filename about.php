@@ -70,7 +70,7 @@ $stmt->close();
             </div>
 
         </header>
-
+        <hr>
         <main>
  <p>ABOUT TOURVIEW</p>
 
