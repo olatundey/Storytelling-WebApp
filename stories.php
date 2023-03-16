@@ -18,7 +18,7 @@ include_once("connection.php");
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Retrieve list of story IDs and title from database
-$result = $conn->query("SELECT id, title FROM stories ORDER BY id DESC");
+$result = $conn->query("SELECT id, story_title FROM stories ORDER BY id DESC");
 
 // To determine the current page number
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;

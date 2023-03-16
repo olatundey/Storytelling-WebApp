@@ -51,6 +51,7 @@ $usercategory = ($_SESSION['userType']);
         <hr>
         <main>
         <p>Welcome StoryTeller, <?php print $user; ?>!</p>
+        <p><a href="submittedstories.php">My Stories</a></p>
         <p>Upload Story:</p>
         <form action="uploadstory.php" method="post" enctype="multipart/form-data">
     <label for="name">Story Source:</label>
