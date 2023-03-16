@@ -96,11 +96,13 @@ $result = $stmt->get_result();
 <?php if(isset($_SESSION['user'])) { ?>
 <p><strong>Hello!</strong> <?php echo $user; ?></p>
 <?php } ?>
-<div><p>Top rated Stories:<a href="toprated.php">Click Here</p></div>
+<div><p>Top rated Stories:<a href="toprated.php">Click Here</a></p></div>
+<div>
     <form action="stories.php" method="GET">
     <input type="text" name="keyword" placeholder="Enter a keyword...">
     <button type="submit">Search</button>
 </form>
+</div>
 	<div>
         <?php while ($row = $result->fetch_assoc()): ?>
 			<li><a href="viewstory.php?id=<?php echo $row['id']; ?>"><?php echo $row['story_title']; ?><br></a></li>
