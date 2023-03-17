@@ -103,7 +103,8 @@ $result = $stmt->get_result();
     <button type="submit">Search</button>
 </form>
 </div>
-	<div>
+	<div class="container"> 
+        <div>
         <?php while ($row = $result->fetch_assoc()): ?>
 			<li><a href="viewstory.php?id=<?php echo $row['id']; ?>"><?php echo $row['story_title']; ?><br></a></li>
 		<?php endwhile; ?>
@@ -113,6 +114,7 @@ $result = $stmt->get_result();
     <p><?php echo "No results found for '$keyword',";?> <a href="stories.php">Click Here</a> for more Stories</p>
 <?php endif; ?>
         </div>
+        <div>
         
 
         <div class="pagination">

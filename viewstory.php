@@ -15,6 +15,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if (Isset($_SESSION["user"])) { //user name must in session to stay here
     $user = ($_SESSION['user']); //get user name into the variable $user
 $usercategory = ($_SESSION['userType']);
+}
 
 $story_id = $_GET['id'];
 $sql = "SELECT latitude, longitude FROM stories WHERE id = $story_id";
@@ -49,7 +50,6 @@ if (isset($_SESSION['user'])) {
     $avgRating = $result2->fetch_assoc()['avg_rating'];
     
 }
-}  
 
 
 

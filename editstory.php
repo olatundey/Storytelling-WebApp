@@ -9,18 +9,52 @@ $user = ($_SESSION['user']); //get user name into the variable $user
     include_once("connection.php");
     // Create connection
     $conn = new mysqli($servername, $username, $password, $dbname);
+  
+  // Retrieve list of story IDs and title from database
+  // $result = $conn->query("SELECT id, story_title FROM stories where us ORDER BY id DESC");
+    
+  $sql4 = "SELECT id, story_title, source_name FROM stories where username_st = ? ORDER BY id DESC";
+  $stmt = $conn->prepare($sql4);
+  $stmt->bind_param("s", $user);
+  $stmt->execute();
+  $result4 = $stmt->get_result();
+  $stmt->close();
+  
+  if (isset($_POST['update_story'])) {
+    $id = $_POST['storyid'];
+    $newtitle = $_POST['newtitle'];
+    
+    // Update the title in the database
+    $update_query = "UPDATE stories SET story_title= ? WHERE id = ?";
+    $stmt = $conn->prepare($update_query);
+    $stmt->bind_param("si", $newtitle, $id);
+    $stmt->execute();
+    $stmt->close();
+  }
 
-// Retrieve story data from database
-$stmt = $conn->prepare("SELECT * FROM stories WHERE id = ?");
-$stmt->bind_param("i", $_GET['id']);
-$stmt->execute();
-$result = $stmt->get_result();
-$story = $result->fetch_assoc();
+  if (isset($_POST['update_desc'])) {
+    $id = $_POST['storyid'];
+    $newdesc = $_POST['newdesc'];
+    
+    // Update the desc in the database
+    $update_query2 = "UPDATE stories SET description = ? WHERE id = ?";
+    $stmt = $conn->prepare($update_query2);
+    $stmt->bind_param("si", $newdesc, $id);
+    $stmt->execute();
+    $stmt->close();
+  }
 
+  if (isset($_POST['remove'])) {
+    $storyid = $_POST['storyid'];
+    // Delete the story with the given storyid from the stories table
+    $delete_sql = "DELETE FROM stories WHERE id = ? and username_st = ?";
+    $delete_stmt = $conn->prepare($delete_sql);
+    $delete_stmt->bind_param('is', $storyid,$user);
+    $delete_stmt->execute();
+  }
 // Close database connection
 // $conn->close();
 
-// Display HTML form pre-populated with existing story data
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -61,33 +95,60 @@ $story = $result->fetch_assoc();
         <hr>
         <main>
         <p>Welcome StoryTeller, <?php print $user; ?>!</p>
-	<h1>Edit Your Story</h1>
-	<form method="post" action="updatestory.php">
-		<label for="name">Userame:</label>
-		<input type="text" id="name" name="name" value="<?php echo $story['name']; ?>"><br><br>
-		
-		<label for="email">Email:</label>
-		<input type="email" id="email" name="email" value="<?php echo $story['email']; ?>"><br><br>
-		
-		<label for="title">Title:</label>
-		<input type="text" id="title" name="title" value="<?php echo $story['title']; ?>"><br><br>
+        </div>
+  <p>Submitted Stories:</p>
+  <table>
+    <tr>
+        <th>Story ID</th>
+        <th>Story Title</th>
+        <th>Source</th>
+    </tr>
+                <?php while ($row = $result4->fetch_assoc()) { ?>
+                <tr>
+                    <td><?php echo $row['id']; ?></td>
+                    <td><?php echo $row['story_title']; ?></td>
+                    <td><?php echo $row['source_name']; ?></td>
+    </tr>
+    <?php } ?>
+</table>
 
-		<label for="story">Story:</label>
-		<textarea id="story" name="story"><?php echo $story['story']; ?></textarea><br><br>
-		
-		<label for="location">Location:</label>
-		<input type="text" id="location" name="location" value="<?php echo $story['location']; ?>"><br><br>
-		
-		<label for="picture">Picture:</label>
-		<input type="file" id="photo" name="picture" accept="image/*"><br><br>
-		
-		<label for="video">Video:</label>
-		<input type="file" id="video" name="video" accept="video/*"><br><br>
-		
-		<input type="hidden" name="id" value="<?php echo $story['id']; ?>">
-		
-		<input type="submit" value="Save Changes">
-	</form>
+  </div>
+  <div>
+    <br>
+  <h6>Change Story Title</h6>
+  <form method="POST" action="">
+    <label for="storyid">Story ID:</label>
+    <input type="text" name="storyid" id="storyid" required>
+    <br>
+    <label for="newtitle">Story Title:</label>
+    <input type="text" name="newtitle" id="newtitle" required>
+    <br>
+    <input type="submit" name="update_story" value="Change Details">
+</form>
+</div>
+<br>
+<div>
+  <h6>Change Story description</h6>
+  <form method="POST" action="">
+    <label for="storyid">Story ID:</label>
+    <input type="text" name="storyid" id="storyid" required>
+    <br>
+    <label for="newdesc">Story Title:</label>
+    <input type="text" name="newdesc" id="newdesc" required>
+    <br>
+    <input type="submit" name="update_desc" value="Change Description">
+</form>
+</div>
+<div>
+            <br>
+  <h6>Remove Story</h6>
+  <form method="POST" action="">
+    <label for="storyid">Story ID:</label>
+    <input type="text" name="storyid" id="storyid" required>
+    <br>
+    <input type="submit" name="remove" value="Remove from Website">
+</form>
+</div>
 		</main>
 <footer>
     <hr>

@@ -63,7 +63,8 @@ if (mysqli_num_rows($result) > 0) {
 } else {
   
   echo "Invalid username or password or Usertype <br>";
-  echo "<a href='login.html'>Return to Sign in</a>";
+  echo "<a href='login.html'>Return to Sign in</a><br>";
+  echo 'username: ' . $user . ' , password: ' . $password . ' , usertype: ' .$usercategory;
 }
 //Close the database connection
 // mysqli_close($conn);

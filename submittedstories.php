@@ -10,69 +10,6 @@ $user = ($_SESSION['user']); //get user name into the variable $user
 $userType = ($_SESSION['userType']); //get usertype into the variable $usertype
 
 
-// if(isset($_POST['name'])){
-//     $name = $_POST['name'];
-//   } else {
-//     $name = "";
-//   }
-  
-//   if(isset($_POST['email'])){
-//     $email = $_POST['email'];
-//   } else {
-//     $email = "";
-//   }
-
-//   if(isset($_POST['title'])){
-//     $title = $_POST['title'];
-//   } else {
-//     $title = "";
-//   }
-//   if(isset($_POST['story'])){
-//     $story = $_POST['story'];
-//   } else {
-//     $story = "";
-//   }  if(isset($_POST['location'])){
-//     $location = $_POST['location'];
-//   } else {
-//     $location = "";
-//   }  if(isset($_POST['picture'])){
-//     $pictureDestination  = $_POST['picture'];
-//   } else {
-//     $pictureDestination = "";
-//   }
-//   if(isset($_POST['video'])){
-//     $videoDestination  = $_POST['video'];
-//   } else {
-//     $videoDestination  = "";
-//   }
-
-  // Connect to database
-include_once("connection.php");
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Retrieve list of story IDs and title from database
-// $result = $conn->query("SELECT id, story_title FROM stories where us ORDER BY id DESC");
-  
-$sql4 = "SELECT id, story_title, source_name FROM stories where username_st = ?";
-$stmt = $conn->prepare($sql4);
-$stmt->bind_param("s", $user);
-$stmt->execute();
-$result4 = $stmt->get_result();
-$stmt->close();
-
-if (isset($_POST['update_story'])) {
-  $id = $_POST['storyid'];
-  $newtitle = $_POST['newtitle'];
-  
-  // Update the password in the database
-  $update_query = "UPDATE stories SET story_title= ? WHERE id = ?";
-  $stmt = $conn->prepare($update_query);
-  $stmt->bind_param("si", $newtitle, $id);
-  $stmt->execute();
-  $stmt->close();
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -113,37 +50,13 @@ if (isset($_POST['update_story'])) {
         <hr>
         <main>
         <p>Welcome StoryTeller, <?php print $user; ?>!</p>
-	<h1>Thank you for submitting your story!</h1>
+        <div>
+	<h4>Thank you for submitting your story!</h4>
 	<p>Your story has been successfully uploaded</p>
-  <div>
-  <p>Submitted Stories:</p>
-  <table>
-    <tr>
-        <th>Story ID</th>
-        <th>Story Title</th>
-        <th>Source</th>
-    </tr>
-                <?php while ($row = $result4->fetch_assoc()) { ?>
-                <tr>
-                    <td><?php echo $row['id']; ?></td>
-                    <td><?php echo $row['story_title']; ?></td>
-                    <td><?php echo $row['source_name']; ?></td>
-    </tr>
-    <?php } ?>
-</table>
-
-  </div>
-  <h6>Change Story Details</h6>
-  <form method="POST" action="">
-    <label for="storyid">Story ID:</label>
-    <input type="text" name="storyid" id="storyid" required>
-    <br>
-    <label for="newtitle">Story Title:</label>
-    <input type="text" name="newtitle" id="newtitle" required>
-    <br>
-    <input type="submit" name="update_story" value="Change Details">
-</form>
+    <div>
+    <p><a href="editstory.php">My Stories</a></p>
 </div>
+
 
         </main>
 <footer>
