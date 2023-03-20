@@ -5,20 +5,6 @@ if (Isset($_SESSION["user"])) { //user name must in session to stay here
 $usercategory = ($_SESSION['userType']);
     // header("Location: index.html"); //if not, go back to login page
 }  
-
-
-// Connect to database
-include_once("connection.php");
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-$sql2 = "SELECT usertype FROM users";
-$stmt = $conn->prepare($sql2);
-$stmt->execute();
-$result2 = $stmt->get_result();
-$user_type = mysqli_fetch_assoc($result2)['usertype'];
-$stmt->close();
-
 ?>
 
 <!DOCTYPE html>
@@ -33,7 +19,7 @@ $stmt->close();
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap-theme.min.css">
         <link href="https://fonts.googleapis.com/css?family=Hind:400,300|Bangers" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">    
-        
+      
     </head>
 
     <body>
@@ -58,7 +44,7 @@ $stmt->close();
             <?php endif; ?>
         </li>
         <li><a href="stories.php" class="nav-item">Stories</a></li>
-        <li><a href="about.php" class="nav-item">About Us</a></li>
+        <li><a href="about.php" class="nav-item">About</a></li>
         <li><a href="logout.php" class="nav-item">Logout</a></li>
     <?php } else { ?>
         <li><a href="index.html" class="nav-item active">Home</a></li>
@@ -76,19 +62,7 @@ $stmt->close();
         <main>
         <hr>
 
-        <h1 style="text-align: center;">Customer Feedback</h1>
-        <form class="contactinfo" action="feedback_db.php" method="post">
-                <label for="name">Full Name:</label>
-                <input type="text" id="name" name="full_name" required><br><br>
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required><br><br>
-                <label for="subject">Subject:</label>
-                <input type="text" id="subject" name="subject" required><br><br>
-                <label for="message">Message:</label>
-                <textarea id="message" name="message" rows="5" cols="30" required></textarea><br><br>
-                <input type="submit" value="Submit">
-            </form>
- 
+ <p>Thank you for contacting TOURVIEW, please allow 24-72 hours for our representative to respond to your query</p>
 
         </main>
 
@@ -112,7 +86,6 @@ $stmt->close();
                     </div>
                 </div>       
             </footer>
-            
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>

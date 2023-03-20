@@ -36,6 +36,13 @@ CREATE TABLE ratings (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE feedback_user (
+id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+full_name varchar(40) NOT NULL,
+email varchar(30) NOT NULL,
+subject varchar(60) NOT NULL,
+message TEXT NOT NULL
+);
 
 
 -- CREATE TABLE removed_stories (

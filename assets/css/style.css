@@ -1,13 +1,19 @@
-body{
+body {
     width: 100%;
     margin: 0;
-    background-color: #363636;
+    background-color: lightcyan;
     padding: 0;
     box-sizing: border-box;
     font-family: Arial, sans-serif;
 }
-main{
-    min-height: 60vh;
+
+
+/* main{
+    background-image: url('background-picture.png');
+} */
+
+footer{
+    max-height: 150px;
 }
 
 nav>ul {
@@ -33,4 +39,84 @@ li a:hover {
 footer div ul{
     list-style-type: none;
     padding: 0;
+}
+
+#userfeedback input[type="submit"] {
+    background-color: #444242f9;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 10px 20px;
+    font-size: 1rem;
+  }
+  
+  #userfeedback input[type="submit"]:hover {
+    background-color: #555;
+  }
+
+main hr{
+    border: 2px solid #477a67;
+}
+
+footer hr{
+    border: 2px solid #477a67;
+
+}
+
+
+.fa {
+    padding: 10px;
+    font-size: 30px;
+    width: 50px;
+    text-align: center;
+    text-decoration: none;
+    margin: 5px 5px;
+  }
+
+.fa-facebook {
+    background: rgb(173, 174, 230);
+    color: white;
+  }
+  
+.fa-twitter {
+    background: #55ACEE;
+    color: white;
+  }
+
+.login-register {
+    padding: 5px;
+    text-align: center;
+  }
+  
+.login-register h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .contactinfo {
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .contactinfo2 {
+    background-color: blue;
+    border-radius: 60px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+
+/* TEXT STYLING */
+
+.title {    
+    margin-top: 90px;
+    /* font-size: 40px; 
+    text-align: top; */
+}
+
+.h1 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
 }

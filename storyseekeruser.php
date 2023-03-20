@@ -19,22 +19,24 @@ $usercategory = ($_SESSION['userType']);
         <link rel="stylesheet" href="assets/css/style.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap-theme.min.css">
-            </head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">    
+      
+    </head>
 
     <body>
         <header class="container">
             <div class="col-md-12">
                 <div id="headerContainer" class="row">
-                    <div class="col-md-2">
-                        <p>Tourview</p>
-                    </div>
+                <div id="title" class="col-md-2">
+                        <h1><strong>Tourview</strong></h1>
+                             </div>
                 
                     <div class="col-md-10">
                     <nav>
                         <ul class="nav justify-content-end">
                         <li><a href = "storyseekeruser.php" class="nav-item">My Account</a></li>   
                             <li><a href = "stories.php" class="nav-item">Stories</a></li>
-                            <li><a href = "about.php" class="nav-item">About Us</a></li>
+                            <li><a href = "about.php" class="nav-item">About</a></li>
                             <li><a href = "logout.php" class="nav-item">Logout</a></li>   
                         </ul>
                     </nav>
@@ -43,8 +45,9 @@ $usercategory = ($_SESSION['userType']);
             </div>
 
         </header>
-        <hr>
         <main>
+        <hr>
+
         <p>Welcome Storyseeker, <?php print $user; ?>!</p>
  
 
@@ -52,13 +55,25 @@ $usercategory = ($_SESSION['userType']);
         </main>
 
         <footer>
-            <hr>
-            <div class="container">
-                <li><a href = "contactus.php" class="nav-item">Contact Us</a></li>   
-
-            </div>
-            
-        </footer>
+                <hr>
+                <div class="container">
+                    <div class="col-md-12" id="footend">
+                        <div id="footercontainer" class="row">
+                            <section class="col-md-3.5">
+                                <h4>Tourview</h4>
+                                <p>Copyright &copy; 2023 All rights reserved.</p>
+                            </section>
+                            <section class="col-md-6">
+                            </section>
+                            <section class="col-md-2.5">
+                            <a href = "contactus.php" class="nav-item">Click Here to Contact Us</a><br>
+                            <a href="https://www.facebook.com/profile.php?id=100090483228208" class="fa fa-facebook"></a>
+                            <a href="https://twitter.com/Tourview_uk" class="fa fa-twitter"></a>
+                            </section>
+                        </div>  
+                    </div>
+                </div>       
+            </footer>
             
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

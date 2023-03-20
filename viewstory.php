@@ -77,6 +77,8 @@ $story = $result->fetch_assoc();
         <link rel="stylesheet" href="unsemantic-grid-responsive-tablet.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">    
+
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3oeQSbb4oNhgeNqTBrdMlqyFSPD9Hg7s"></script>
 
     </head>
@@ -85,9 +87,9 @@ $story = $result->fetch_assoc();
     <header class="container">
         <div class="col-md-12">
             <div id="headerContainer" class="row">
-                <div class="col-md-2">
-                    <p><h1>Tourview</h1></p>
-                </div>
+            <div id="title" class="col-md-2">
+                        <h1><strong>Tourview</strong></h1>
+                             </div>
             
                 <div class="col-md-10">
                 <nav>
@@ -119,8 +121,9 @@ $story = $result->fetch_assoc();
         </div>
 
     </header>
-    <hr>
     <main>
+    <hr>
+
 <h2><?php echo $story['story_title']; ?></h2>
 <?php if(isset($_SESSION['user'])) { ?>
 <p><strong>Average Rating:</strong> <?php echo number_format($avgRating, 1); ?> stars</p>
@@ -162,12 +165,25 @@ $story = $result->fetch_assoc();
 
 </main>
 <footer>
-<hr>
-<div class="container">
-    <li><a href = "contactus.php" class="nav-item">Contact Us</a></li>   
-
-</div>
-</footer>
+                <hr>
+                <div class="container">
+                    <div class="col-md-12" id="footend">
+                        <div id="footercontainer" class="row">
+                            <section class="col-md-3.5">
+                                <h4>Tourview</h4>
+                                <p>Copyright &copy; 2023 All rights reserved.</p>
+                            </section>
+                            <section class="col-md-6">
+                            </section>
+                            <section class="col-md-2.5">
+                            <a href = "contactus.php" class="nav-item">Click Here to Contact Us</a><br>
+                            <a href="https://www.facebook.com/profile.php?id=100090483228208" class="fa fa-facebook"></a>
+                            <a href="https://twitter.com/Tourview_uk" class="fa fa-twitter"></a>
+                            </section>
+                        </div>  
+                    </div>
+                </div>       
+            </footer>
 
 <script>
             function initMap() {
