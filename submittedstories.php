@@ -51,18 +51,17 @@ $userType = ($_SESSION['userType']); //get usertype into the variable $usertype
         <main>
         <hr>
 
-        <p>Welcome StoryTeller, <?php print $user; ?>!</p>
-        <div>
-	<h4>Thank you for submitting your story!</h4>
-	<p>Your story has been successfully uploaded</p>
-    <div>
+        <div class="container">
     <p><a href="editstory.php">My Stories</a></p>
 </div>
+<div id="background-picture" style="width: 100%; height: 100%;">
+                <img src="assets/images/submittedstory.png" alt="submitted-picture"/>
+              </div>
 
-
+              <hr>
         </main>
         <footer>
-                <hr>
+
                 <div class="container">
                     <div class="col-md-12" id="footend">
                         <div id="footercontainer" class="row">

@@ -52,7 +52,41 @@ $result = $stmt->get_result();
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap-theme.min.css">
         <link href="https://fonts.googleapis.com/css?family=Hind:400,300|Bangers" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">    
-        
+        <style>
+            .sidenav {
+  height: 70%;
+
+  width: 160px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: grey;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 25px;
+  color: white;
+  display: block;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+        .main {
+    width: 100%;
+    margin: 0;
+    background-image: url('background-picture.png');
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+</style>   
     </head>
     <body>
         <header class="container">
@@ -95,31 +129,40 @@ $result = $stmt->get_result();
         <main>
         <hr>
 
+<div class="sidenav">
+  <a href="stories.php">All Stories</a>
+  <a href="#">Places</a>
+  <a href="#">Museum</a>
+  <a href="#">Other Stories</a>
+</div>
+
 	<h1>Stories</h1>
 <?php if(isset($_SESSION['user'])) { ?>
 <p><strong>Hello!</strong> <?php echo $user; ?></p>
 <?php } ?>
-<div><p>Top rated Stories:<a href="toprated.php">Click Here</a></p></div>
+<div><p>Top rated Stories: <a href="toprated.php">Click Here</a></p></div>
 <div>
-    <form action="stories.php" method="GET">
+    <form class="classinfo" action="stories.php" method="GET">
     <input type="text" name="keyword" placeholder="Enter a keyword...">
     <button type="submit">Search</button>
 </form>
 </div>
+<br>
 	<div class="container"> 
-        <div>
         <?php while ($row = $result->fetch_assoc()): ?>
-			<li><a href="viewstory.php?id=<?php echo $row['id']; ?>"><?php echo $row['story_title']; ?><br></a></li>
-		<?php endwhile; ?>
+            <div class="contactinfo">
+			<a href="viewstory.php?id=<?php echo $row['id']; ?>"><?php echo $row['story_title']; ?><br></a>
+		</div><br><br>
+            <?php endwhile; ?>
     </div>
-    <div>
+    <div class="container">
         <?php if ($result->num_rows === 0): ?>
     <p><?php echo "No results found for '$keyword',";?> <a href="stories.php">Click Here</a> for more Stories</p>
 <?php endif; ?>
         </div>
-        <div>
-        
 
+        <br>
+<div class="container">
         <div class="pagination">
     <?php if ($page > 1): ?>
         <a href="?page=<?php echo $page - 1; ?>">Previous Page</a>

@@ -82,10 +82,9 @@ $user = ($_SESSION['user']); //get user name into the variable $user
                     <div class="col-md-10">
                     <nav>
                         <ul class="nav justify-content-end">
-                            <li><a href = "home.php" class="nav-item active" >Home</a></li>
+                        <li><a href = "storytelleruser.php" class="nav-item">My Account</a></li>   
                             <li><a href = "stories.php" class="nav-item">Stories</a></li>
                             <li><a href = "about.php" class="nav-item">About</a></li>
-                            <li><a href = "storytelleruser.php" class="nav-item">My Account</a></li>   
                             <li><a href = "logout.php" class="nav-item">Logout</a></li>   
                         </ul>
                     </nav>
@@ -96,12 +95,14 @@ $user = ($_SESSION['user']); //get user name into the variable $user
         </header>
         <main>
         <hr>
-
-        <p>Welcome StoryTeller, <?php print $user; ?>!</p>
+<div>
+        <label><strong>Hello StoryTeller, </strong><?php print $user; ?>!</label>
         </div>
-  <p>Submitted Stories:</p>
-  <table>
-    <tr>
+        <br>
+        <div class="container">
+  <h6>Submitted Stories</h6>
+  <table class="table table-bordered">
+    <tr class="table-info">
         <th>Story ID</th>
         <th>Story Title</th>
         <th>Source</th>
@@ -109,50 +110,52 @@ $user = ($_SESSION['user']); //get user name into the variable $user
                 <?php while ($row = $result4->fetch_assoc()) { ?>
                 <tr>
                     <td><?php echo $row['id']; ?></td>
-                    <td><?php echo $row['story_title']; ?></td>
+                    <td><a href="viewstory.php?id=<?php echo $row['id']; ?>"><?php echo $row['story_title']; ?></td>
                     <td><?php echo $row['source_name']; ?></td>
     </tr>
     <?php } ?>
 </table>
 
   </div>
-  <div>
+
     <br>
+    <div class="container">
   <h6>Change Story Title</h6>
-  <form method="POST" action="">
+  <form class="contactinfo" method="POST" action="">
     <label for="storyid">Story ID:</label>
     <input type="text" name="storyid" id="storyid" required>
-    <br>
+
     <label for="newtitle">Story Title:</label>
     <input type="text" name="newtitle" id="newtitle" required>
-    <br>
     <input type="submit" name="update_story" value="Change Details">
 </form>
 </div>
 <br>
-<div>
+ <div class="container">
   <h6>Change Story description</h6>
-  <form method="POST" action="">
+  <form class="contactinfo" method="POST" action="">
     <label for="storyid">Story ID:</label>
-    <input type="text" name="storyid" id="storyid" required>
-    <br>
-    <label for="newdesc">Story Title:</label>
-    <input type="text" name="newdesc" id="newdesc" required>
-    <br>
+    <input type="text" name="storyid" id="storyid" required><br>
+  
+    <label for="newdesc">Story Description:</label><br>
+    <textarea id="newdesc" name="newdesc" rows="4" cols="60" required></textarea><br>
+
+ 
     <input type="submit" name="update_desc" value="Change Description">
 </form>
 </div>
-<div>
-            <br>
+<br>
+<div class="container">
   <h6>Remove Story</h6>
-  <form method="POST" action="">
+  <form class="contactinfo" method="POST" action="">
     <label for="storyid">Story ID:</label>
     <input type="text" name="storyid" id="storyid" required>
-    <br>
+    
     <input type="submit" name="remove" value="Remove from Website">
 </form>
 </div>
 		</main>
+
     <footer>
                 <hr>
                 <div class="container">

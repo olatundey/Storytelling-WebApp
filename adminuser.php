@@ -47,7 +47,7 @@ $result3 = $stmt->get_result();
 $storytellercount = mysqli_fetch_assoc($result3)['Tellercount'];
 $stmt->close();
 
-$sql4 = "SELECT id, story_title, category, username_st FROM stories";
+$sql4 = "SELECT id, story_title, category, username_st FROM stories order by id DESC";
 $stmt = $conn->prepare($sql4);
 $stmt->execute();
 $result4 = $stmt->get_result();
@@ -74,29 +74,6 @@ if (isset($_POST['remove'])) {
     $delete_stmt->bind_param('i', $storyid);
     $delete_stmt->execute();
 
-    // // Retrieve the story with the given storyid from the stories table
-    // $select_sql = "SELECT * FROM stories WHERE id = ?";
-    // $select_stmt = $conn->prepare($select_sql);
-    // $select_stmt->bind_param('i', $storyid);
-    // $select_stmt->execute();
-    // $result = $select_stmt->get_result();
-
-    // // Insert the story into the removed_stories table
-    // $row = $result->fetch_assoc();
-    // $source_name = $row['source_name'];
-    // $story_title = $row['story_title'];
-    // $description = $row['description'];
-    // $location = $row['location']; 
-    // $pictureDestination = $row['picture_data'];
-    // $videoDestination = $row['video_data'];
-    // $latitude = $row['latitude'];
-    // $longitude = $row['longitude'];
-    // $username = $row['username_st'];
-    // $category = $row['category'];
-    // $insert_sql = "INSERT INTO removed_stories (source_name, story_title, description, location, latitude, longitude, picture_data, video_data, username_st, category) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    // $insert_stmt = $conn->prepare($insert_sql);
-    // $insert_stmt->bind_param("ssssddssss", $source_name, $story_title, $description, $location, $latitude, $longitude, $pictureDestination, $videoDestination, $username, $category);
-    // $insert_stmt->execute();
 }
 
 ?>
@@ -142,20 +119,26 @@ if (isset($_POST['remove'])) {
 
         <main>
         <hr>
-        <p>Welcome Admin, <?php echo $user; ?>!</p>
+        <label><strong>Welcome Admin, </strong><?php echo $user; ?>!</label>
+<br>
+        <div class="container">
+            <form class="contactinfo">
+            <label><strong>Number of stories is: </strong><?php echo $storiescount; ?></label>
+            </form>
+        </div><br>
 
-        <div>
-            <p>Number of stories is: <?php echo $storiescount; ?></p>
-        </div>
+        <div class="container">
+        <form class="contactinfo">
 
-        <div>
-            <p>Number of storyteller(s) is: <?php echo $storytellercount; ?></p>
-        </div>
+            <label><strong>Number of storyteller(s) is: </strong><?php echo $storytellercount; ?></p>
+            </form>
 
-        <div>
-            <p>Registered Users:</p>
-            <table>
-    <tr>
+        </div><br>
+
+        <div class="container">
+        <label><strong>Registered Users:</strong></label>
+            <table class="table table-bordered">
+    <tr class="table-info">
         <th>User ID</th>
         <th>First Name</th>
         <th>Last Name</th>
@@ -166,7 +149,7 @@ if (isset($_POST['remove'])) {
         <th>User Type</th>
     </tr>
                 <?php while ($row = $allusers->fetch_assoc()) { ?>
-                <tr>
+                <tr class="table-success">
                     <td><?php echo $row['uid']; ?></td>
                     <td><?php echo $row['first_name']; ?></td>
                     <td><?php echo $row['last_name']; ?></td>
@@ -180,55 +163,55 @@ if (isset($_POST['remove'])) {
 </table>
 
         </div>
-        <div>
-            <br>
+        <br>
+        <div class="container">
+         
   <h6>Change User Password</h6>
-  <form method="POST" action="">
+  <form class="contactinfo" method="POST" action="">
     <label for="userid">User ID:</label>
     <input type="text" name="userid" id="userid" required>
-    <br>
+   
     <label for="newpassword">New Password:</label>
     <input type="password" name="newpassword" id="newpassword" required>
-    <br>
+    
     <input type="submit" name="change_password" value="Change Password">
 </form>
 </div>
 
 <br>
-<div>
-            <p>Available Stories:</p>
-            <table>
-    <tr>
+<div class="container">
+        <label><strong>Available Stories:</strong></label>
+            <table class="table table-bordered">
+    <tr class="table-info">
         <th>Story ID</th>
         <th>Story Title</th>
         <th>Category</th>
-        <th>StoryTeller Name</th>
+        <th>Storyteller Username</th>
     </tr>
                 <?php while ($row = $result4->fetch_assoc()) { ?>
-                <tr>
+                <tr class="table-success">
                     <td><?php echo $row['id']; ?></td>
-                    <td><?php echo $row['story_title']; ?></td>
+                    <td><a href="viewstory.php?id=<?php echo $row['id']; ?>"><?php echo $row['story_title']; ?></td>
                     <td><?php echo $row['category']; ?></td>
                     <td><?php echo $row['username_st']; ?></td>
     </tr>
     <?php } ?>
 </table>
         </div>
-        <div>
-            <br>
+        <br>
+        <div class="container">
   <h6>Remove Story</h6>
-  <form method="POST" action="">
+  <form class="contactinfo" method="POST" action="">
     <label for="storyid">Story ID:</label>
     <input type="text" name="storyid" id="storyid" required>
-    <br>
     <input type="submit" name="remove" value="Remove from Website">
 </form>
 </div>
-
-        </main>
 <hr>
+        </main>
+
 <footer>
-                <hr>
+             
                 <div class="container">
                     <div class="col-md-12" id="footend">
                         <div id="footercontainer" class="row">

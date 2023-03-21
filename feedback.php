@@ -61,9 +61,9 @@ $usercategory = ($_SESSION['userType']);
         </header>
         <main>
         <hr>
-
- <p>Thank you for contacting TOURVIEW, please allow 24-72 hours for our representative to respond to your query</p>
-
+        <div id="background-picture" style="width: 100%; height: 100%;">
+                <img src="assets/images/feedback.png" alt="feedback-picture"/>
+              </div>
         </main>
 
         <footer>

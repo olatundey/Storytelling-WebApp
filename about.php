@@ -74,10 +74,8 @@ $stmt->close();
         </header>
         <main>
         <hr>
-
- <p>ABOUT TOURVIEW</p>
             <div id="background-picture" style="width: 100%; height: 100%;">
-                <img src="assets/images/background-picture.png" alt="background-picture"/>
+                <img src="assets/images/about-page.png" alt="background-picture"/>
               </div>
               <hr>
         </main>

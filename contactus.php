@@ -76,10 +76,13 @@ $stmt->close();
         <main>
         <hr>
 
-        <h1 style="text-align: center;">Customer Feedback</h1>
+        <div class="login-register">
+        <h2>Contact Us: Feedback</h2>
+
+        <div class="userfeedback">
         <form class="contactinfo" action="feedback_db.php" method="post">
-                <label for="name">Full Name:</label>
-                <input type="text" id="name" name="full_name" required><br><br>
+        <label for="name">Full Name:</label>
+                <input type="text" id="full_name" name="full_name" required><br><br>
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required><br><br>
                 <label for="subject">Subject:</label>
@@ -88,6 +91,8 @@ $stmt->close();
                 <textarea id="message" name="message" rows="5" cols="30" required></textarea><br><br>
                 <input type="submit" value="Submit">
             </form>
+        </div>
+        </div>
  
 
         </main>
