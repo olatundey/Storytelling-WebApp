@@ -1,6 +1,6 @@
 <?php
 session_start();    //create or retrieve session
-if (!Isset($_SESSION["user"])) { //user name must in session to stay here
+if (!isset($_SESSION["user"])) { //user name must in session to stay here
     header("Location: login.html");
 }  //if not, go back to login page
 $user = ($_SESSION['user']); //get user name into the variable $user
@@ -36,17 +36,26 @@ $usercategory = ($_SESSION['userType']);
                         <h1><strong>Tourview</strong></h1>
                              </div>
                 
-                    <div class="col-md-10">
+                             <div class="col-md-10">
                     <nav>
                         <ul class="nav justify-content-end">
-                        <li><a href = "storytelleruser.php" class="nav-item">My Account</a></li>   
-                            <li><a href = "stories.php" class="nav-item">Stories</a></li>
-                            <li><a href = "about.php" class="nav-item">About</a></li>
-                            <li><a href = "logout.php" class="nav-item">Logout</a></li>   
+                            <?php if (isset($_SESSION["user"])) { ?>
+                                <li>
+                                    <?php if ($usercategory == "admin"): ?>
+                                        <a href="adminuser.php" class="nav-link">My Account</a>
+                                    <?php elseif ($usercategory == "storyteller"): ?>
+                                        <a href="storytelleruser.php?usercategory=<?php echo $usercategory; ?>" class="nav-link">My Account</a>
+                                    <?php elseif ($usercategory == "storyseeker"): ?>
+                                        <a href="storyseekeruser.php?usercategory=<?php echo $usercategory; ?>" class="nav-link">My Account</a>
+                                    <?php endif; ?>
+                                </li>
+                                <li><a href="stories.php" class="nav-link">Stories</a></li>
+                                <li><a href="about.php" class="nav-link">About</a></li>
+                                <li><a href="logout.php" class="nav-link">Logout</a></li>   
+                            <?php } ?>
                         </ul>
                     </nav>
-                    </div>
-                </div>    
+                </div>
             </div>
 
         </header>
@@ -55,7 +64,7 @@ $usercategory = ($_SESSION['userType']);
 
 
         <div class="login-register">
-        <label><strong>Welcome StoryTeller, </strong><?php print $user; ?>!</label><br>
+        <label><strong>Hello, </strong><?php print $user; ?>!</label><br>
         <label><strong><a href="editstory.php">My Stories</a></strong></label>
         <h3>Upload Story</h3>
         <div class="userfeedback">
@@ -76,10 +85,10 @@ $usercategory = ($_SESSION['userType']);
     <input type="text" id="location" name="location" required><br>
 
     <label for="latitude">Latitude:</label>
-    <input type="number" id="latitude" name="latitude" step="0.00000001" placeholder="Latitude (+N,-S)"><br>
+    <input type="number" id="latitude" name="latitude" step="0.00000001" placeholder="+Latitude (+N,-S)"><br>
 
     <label for="longitude">Longitude:</label>
-    <input type="number" id="longitude" name="longitude" step="0.00000001" placeholder="Longitude (-W,+E)"><br>
+    <input type="number" id="longitude" name="longitude" step="0.00000001" placeholder="-Longitude (-W,+E)"><br>
 
     <label for="picture">Photo:</label>
     <input type="file" id="picture" name="picture" accept="image/*" required><br>

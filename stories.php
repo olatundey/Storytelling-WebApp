@@ -56,12 +56,12 @@ $result = $stmt->get_result();
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">    
         <style>
             .sidenav {
-  height: 70%;
+  height: 100%;
 
   width: 160px;
   position: fixed;
   z-index: 1;
-  top: 0;
+  top: 12%;
   left: 0;
   background-color: grey;
   overflow-x: hidden;
@@ -167,7 +167,20 @@ $result = $stmt->get_result();
     <div id="img">
     <a href="viewstory.php?id=<?php echo $row['id']; ?>"><img src="<?php echo $row['picture_data']; ?>" alt="Photo">
     </div><br>
-    <div>
+    <div class="container">
+        
+
+    <div class="col-md-12" id="footend">
+                        <div id="footercontainer" class="row">
+                            <section class="col-md-3.5">
+                                <h4>Tourview</h4>
+                                <p>Copyright &copy; 2023 All rights reserved.</p>
+                            </section>
+                            <section class="col-md-6">
+                            </section>
+                            <section class="col-md-2.5">
+
+
         <a href="viewstory.php?id=<?php echo $row['id']; ?>"><?php echo $row['story_title']; ?><br></a>
     </div>
 </div>

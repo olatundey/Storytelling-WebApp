@@ -119,7 +119,8 @@ if (isset($_POST['remove'])) {
 
         <main>
         <hr>
-        <label><strong>Welcome Admin, </strong><?php echo $user; ?>!</label>
+        <label><strong>Welcome Admin, </strong><?php echo $user; ?>!</label><br>
+        <label><a href="storytelleruser.php">Upload a Story</a></label>
 <br>
         <div class="container">
             <form class="contactinfo">

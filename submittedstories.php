@@ -7,7 +7,8 @@ if (!Isset($_SESSION["user"])) { //user name must in session to stay here
     header("Location: login.html");
 }  //if not, go back to login page
 $user = ($_SESSION['user']); //get user name into the variable $user
-$userType = ($_SESSION['userType']); //get usertype into the variable $usertype
+$usercategory = ($_SESSION['userType']);
+
 
 
 ?>
@@ -34,19 +35,27 @@ $userType = ($_SESSION['userType']); //get usertype into the variable $usertype
                         <h1><strong>Tourview</strong></h1>
                              </div>
                 
-                    <div class="col-md-10">
+                             <div class="col-md-10">
                     <nav>
                         <ul class="nav justify-content-end">
-                        <li><a href = "storytelleruser.php" class="nav-item">My Account</a></li>   
-                            <li><a href = "stories.php" class="nav-item">Stories</a></li>
-                            <li><a href = "about.php" class="nav-item">About</a></li>
-                            <li><a href = "logout.php" class="nav-item">Logout</a></li>   
+                            <?php if (isset($_SESSION["user"])) { ?>
+                                <li>
+                                    <?php if ($usercategory == "admin"): ?>
+                                        <a href="adminuser.php" class="nav-link">My Account</a>
+                                    <?php elseif ($usercategory == "storyteller"): ?>
+                                        <a href="storytelleruser.php?usercategory=<?php echo $usercategory; ?>" class="nav-link">My Account</a>
+                                    <?php elseif ($usercategory == "storyseeker"): ?>
+                                        <a href="storyseekeruser.php?usercategory=<?php echo $usercategory; ?>" class="nav-link">My Account</a>
+                                    <?php endif; ?>
+                                </li>
+                                <li><a href="stories.php" class="nav-link">Stories</a></li>
+                                <li><a href="about.php" class="nav-link">About</a></li>
+                                <li><a href="logout.php" class="nav-link">Logout</a></li>   
+                            <?php } ?>
                         </ul>
                     </nav>
-                    </div>
-                </div>    
+                </div>
             </div>
-
         </header>
         <main>
         <hr>
