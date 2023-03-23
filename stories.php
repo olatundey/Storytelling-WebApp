@@ -18,7 +18,7 @@ include_once("connection.php");
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Retrieve list of story IDs and title from database
-$result = $conn->query("SELECT id, story_title FROM stories ORDER BY id DESC");
+$result = $conn->query("SELECT id, story_title, picture_data FROM stories ORDER BY id DESC");
 
 // To determine the current page number
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
@@ -37,6 +37,8 @@ if (isset($_GET['keyword'])) {
 }
 $stmt->execute();
 $result = $stmt->get_result();
+
+
 
 ?>
 
@@ -85,8 +87,16 @@ $result = $stmt->get_result();
     padding: 0;
     box-sizing: border-box;
     font-family: Arial, sans-serif;
+
+    
 }
-</style>   
+    .contactinfo img {
+        width: 100%;
+        height: 200px;
+        max-width: 100%;
+    }
+</style>  
+
     </head>
     <body>
         <header class="container">
@@ -137,6 +147,7 @@ $result = $stmt->get_result();
 </div>
 
 	<h1>Stories</h1>
+    <div class="container"> 
 <?php if(isset($_SESSION['user'])) { ?>
 <p><strong>Hello!</strong> <?php echo $user; ?></p>
 <?php } ?>
@@ -147,12 +158,22 @@ $result = $stmt->get_result();
     <button type="submit">Search</button>
 </form>
 </div>
+    </div>
 <br>
 	<div class="container"> 
         <?php while ($row = $result->fetch_assoc()): ?>
-            <div class="contactinfo">
-			<a href="viewstory.php?id=<?php echo $row['id']; ?>"><?php echo $row['story_title']; ?><br></a>
-		</div><br><br>
+
+<div class="contactinfo">
+    <div id="img">
+    <a href="viewstory.php?id=<?php echo $row['id']; ?>"><img src="<?php echo $row['picture_data']; ?>" alt="Photo">
+    </div><br>
+    <div>
+        <a href="viewstory.php?id=<?php echo $row['id']; ?>"><?php echo $row['story_title']; ?><br></a>
+    </div>
+</div>
+
+
+<br><br>
             <?php endwhile; ?>
     </div>
     <div class="container">
@@ -172,6 +193,7 @@ $result = $stmt->get_result();
         <a href="?page=<?php echo $page + 1; ?>">Next Page</a>
     <?php endif; ?>
 </div>
+    </div>
         </main>
 
         <footer>
