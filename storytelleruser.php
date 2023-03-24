@@ -62,9 +62,11 @@ $usercategory = ($_SESSION['userType']);
         <main>
         <hr>
 
-
-        <div class="login-register">
+        <div class="custom-text2">
         <label><strong>Hello, </strong><?php print $user; ?>!</label><br>
+        </div>
+        <div class="login-register">
+
         <label><strong><a href="editstory.php">My Stories</a></strong></label>
         <h3>Upload Story</h3>
         <div class="userfeedback">
@@ -97,7 +99,7 @@ $usercategory = ($_SESSION['userType']);
     <input type="file" id="video" name="video" accept="video/*"><br>
         
     <label for="story">Story Description:</label>
-    <textarea id="description" name="description" rows="5" cols="30" required></textarea><br>
+    <textarea id="description" name="description" rows="5" cols="30" required  wrap="soft" style="width: 100%;"></textarea><br>
 
     <input type="submit" value="Submit" name="submit">
 </form>

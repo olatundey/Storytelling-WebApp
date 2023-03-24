@@ -46,7 +46,25 @@ $result = $stmt->get_result();
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap-theme.min.css">
         <link href="https://fonts.googleapis.com/css?family=Hind:400,300|Bangers" rel="stylesheet" type="text/css">
-            </head>
+        <style>
+
+    .contactinfo img {
+        width: 100%;
+        height: 200px;
+        max-width: 100%;
+    }
+
+
+    .contactinfo {
+        position: relative;
+    }
+    .custom-text {
+        position: absolute;
+        bottom: 2%;
+        right: 2%;
+    }        
+    </style>
+    </head>
     <body>
         <header class="container">
             <div class="col-md-12">
@@ -92,12 +110,26 @@ $result = $stmt->get_result();
 <p><strong>Hello!</strong> <?php echo $user; ?></p>
 <?php } ?>
 
-	<div>
+<div class="container"> 
         <?php while ($row = $result->fetch_assoc()): ?>
-			<li><a href="viewstory.php?id=<?php echo $row['id']; ?>"><?php echo $row['story_title']; ?><br></a></li>
-		<?php endwhile; ?>
-    </div>
 
+<div class="contactinfo">
+    <div id="img">
+    <a href="viewstory.php?id=<?php echo $row['id']; ?>"><img src="<?php echo $row['picture_data']; ?>" alt="Photo">
+    </div><br>
+    <div>
+        <a href="viewstory.php?id=<?php echo $row['id']; ?>"><?php echo $row['story_title']; ?><br></a>
+        <div class="custom-text">
+        <?php if(isset($_SESSION['user'])) { ?>
+<p>Read & <img src="assets/images/like.png" alt="Like" style="width: 20px; height: 16px;"></p>
+<?php } ?></div>
+    </div>
+</div>
+
+
+<br><br>
+            <?php endwhile; ?>
+    </div>
         
 
         <div class="pagination">

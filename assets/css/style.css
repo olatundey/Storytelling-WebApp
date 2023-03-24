@@ -134,3 +134,9 @@ footer hr{
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
 }
+
+.custom-text2 {
+  position: absolute;
+  top: 2%;
+  right: 2%;
+}

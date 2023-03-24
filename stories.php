@@ -62,6 +62,7 @@ $result = $stmt->get_result();
   position: fixed;
   z-index: 1;
   top: 12%;
+  bottom: 12%,
   left: 0;
   background-color: grey;
   overflow-x: hidden;
@@ -95,6 +96,18 @@ $result = $stmt->get_result();
         height: 200px;
         max-width: 100%;
     }
+
+
+    .contactinfo {
+        position: relative;
+    }
+    .custom-text {
+        position: absolute;
+        bottom: 2%;
+        right: 2%;
+    }
+
+
 </style>  
 
     </head>
@@ -136,7 +149,7 @@ $result = $stmt->get_result();
             </div>
 
         </header>
-        <main>
+        <main class="main" style="position: relative;">
         <hr>
 
 <div class="sidenav">
@@ -145,11 +158,12 @@ $result = $stmt->get_result();
   <a href="#">Museum</a>
   <a href="#">Other Stories</a>
 </div>
-
+<div class="container"> 
 	<h1>Stories</h1>
-    <div class="container"> 
 <?php if(isset($_SESSION['user'])) { ?>
+    <div class="custom-text2">
 <p><strong>Hello!</strong> <?php echo $user; ?></p>
+    </div>
 <?php } ?>
 <div><p>Top rated Stories: <a href="toprated.php">Click Here</a></p></div>
 <div>
@@ -167,21 +181,12 @@ $result = $stmt->get_result();
     <div id="img">
     <a href="viewstory.php?id=<?php echo $row['id']; ?>"><img src="<?php echo $row['picture_data']; ?>" alt="Photo">
     </div><br>
-    <div class="container">
-        
-
-    <div class="col-md-12" id="footend">
-                        <div id="footercontainer" class="row">
-                            <section class="col-md-3.5">
-                                <h4>Tourview</h4>
-                                <p>Copyright &copy; 2023 All rights reserved.</p>
-                            </section>
-                            <section class="col-md-6">
-                            </section>
-                            <section class="col-md-2.5">
-
-
+    <div>
         <a href="viewstory.php?id=<?php echo $row['id']; ?>"><?php echo $row['story_title']; ?><br></a>
+        <div class="custom-text">
+        <?php if(isset($_SESSION['user'])) { ?>
+<p>Read & <img src="assets/images/like.png" alt="Like" style="width: 20px; height: 16px;"></p>
+<?php } ?></div>
     </div>
 </div>
 

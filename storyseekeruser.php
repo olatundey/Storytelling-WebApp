@@ -47,8 +47,9 @@ $usercategory = ($_SESSION['userType']);
         </header>
         <main>
         <hr>
-
-        <label><strong>Hello StoryTeller, </strong><?php print $user; ?>!</label>
+        <div class="custom-text2">
+        <label><strong>Hello, </strong><?php print $user; ?>!</label>
+        </div>
         <div id="background-picture" style="width: 100%; height: 100%;">
                 <img src="assets/images/welcome.png" alt="welcome-picture"/>
               </div>

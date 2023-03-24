@@ -3,6 +3,11 @@ session_start();    //create or retrieve session
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+if (Isset($_SESSION["user"])) { //user name must in session to stay here
+    $user = ($_SESSION['user']); //get user name into the variable $user
+$usercategory = ($_SESSION['userType']);
+}
+
 // $latitude = $_POST['latitude'];
 // $longitude = $_POST['longitude'];
 
@@ -12,10 +17,7 @@ include_once("connection.php");
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-if (Isset($_SESSION["user"])) { //user name must in session to stay here
-    $user = ($_SESSION['user']); //get user name into the variable $user
-$usercategory = ($_SESSION['userType']);
-}
+
 
 $story_id = $_GET['id'];
 $sql = "SELECT latitude, longitude FROM stories WHERE id = $story_id";
@@ -123,30 +125,30 @@ $story = $result->fetch_assoc();
     </header>
     <main>
     <hr>
-
+    <?php if (!empty($story['picture_data'])): ?>
+    <div id="img">
+<p>
+    <img src="<?php echo $story['picture_data']; ?>" style="width: 100%; height: 100%;" alt="Photo">
+<?php endif; ?></p>
+</div>
 <h2><?php echo $story['story_title']; ?></h2>
 <?php if(isset($_SESSION['user'])) { ?>
 <p><strong>Average Rating:</strong> <?php echo number_format($avgRating, 1); ?> stars</p>
 <?php } ?>
 <p><strong>Story Source:</strong> <?php echo $story['source_name']; ?></p>
-<p><strong>Story Title:</strong> <?php echo $story['story_title']; ?></p>
 <p><strong>Location:</strong> <?php echo $story['location']; ?></p>
-<p><strong>Story description:</strong> <?php echo $story['description']; ?></p>
-<div id="img" style="width: 70%; height: 500px;">
-<p>Picture:<?php if (!empty($story['picture_data'])): ?>
-    <img src="<?php echo $story['picture_data']; ?>" alt="Photo">
+<p><strong>Story description:<BR></strong> <?php echo $story['description']; ?></p><br><br>
+<?php if (!empty($story['video_data'])): ?>
+<div id="vid">
+<p>
+    <video src="<?php echo $story['video_data']; ?>" style="width: 100%; height: 400px;" controls></video>
+    </div>
 <?php endif; ?></p>
-</div>
-<div id="vid" style="width: 70%; height: 400px;">
-<p>Video:<?php if (!empty($story['video_data'])): ?>
-    <video src="<?php echo $story['video_data']; ?>" controls></video>
-<?php endif; ?></p>
-</div>
+
 <!-- HTML code to display the map -->
 <div id="map" style="width: 100%; height: 400px;"></div>
 
 <?php if (isset($_SESSION["user"])) { ?>
-<!-- form for rating -->
 <?php if (!$hasRated): ?>
 <form action="rating.php" method="POST">
     <p><strong>Rate this story:</strong></p>
