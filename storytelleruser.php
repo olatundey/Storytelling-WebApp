@@ -29,7 +29,7 @@ $usercategory = ($_SESSION['userType']);
     <style>
         .custom-text {
             position: absolute;
-            top: 17%;
+            top: 14%;
             right: 2%;
         }
     </style>
