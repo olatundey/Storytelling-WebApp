@@ -65,15 +65,14 @@ $result = $stmt->get_result();
     }        
     </style>
     </head>
-    <body>
-        <header class="container">
+    <header class="container">
             <div class="col-md-12">
                 <div id="headerContainer" class="row">
-                    <div class="col-md-2">
-                        <p>Tourview</p>
-                    </div>
+                <div id="title" class="col-md-2">
+                        <h1><strong>Tourview</strong></h1>
+                             </div>
                 
-                    <div class="col-md-10">
+                             <div class="col-md-10">
                     <nav>
                     <ul class="nav justify-content-end">
     <?php if (isset($_SESSION["user"])) { ?>
