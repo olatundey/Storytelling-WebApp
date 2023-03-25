@@ -107,7 +107,11 @@ $result = $stmt->get_result();
         right: 2%;
     }
 
-
+        .custom-text2 {
+  position: absolute;
+  top: 12.4%;
+  right: 2%;
+        }
 </style>  
 
     </head>
@@ -149,15 +153,8 @@ $result = $stmt->get_result();
             </div>
 
         </header>
-        <main class="main" style="position: relative;">
+        <main class="main">
         <hr>
-
-<div class="sidenav">
-  <a href="stories.php">All Stories</a>
-  <a href="#">Places</a>
-  <a href="#">Museum</a>
-  <a href="#">Other Stories</a>
-</div>
 <div class="container"> 
 	<h1>Stories</h1>
 <?php if(isset($_SESSION['user'])) { ?>
@@ -174,6 +171,18 @@ $result = $stmt->get_result();
 </div>
     </div>
 <br>
+<div class="container">
+        <div class="pagination">
+    <?php if ($page > 1): ?>
+        <a href="?page=<?php echo $page - 1; ?>">Previous Page</a>
+    <?php endif; ?>
+
+    <?php if ($result->num_rows === $perPage): ?>
+        <a href="?page=<?php echo $page + 1; ?>">Next Page</a>
+    <?php endif; ?>
+</div>
+    </div>
+    <br>
 	<div class="container"> 
         <?php while ($row = $result->fetch_assoc()): ?>
 

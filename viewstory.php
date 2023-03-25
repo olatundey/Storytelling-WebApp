@@ -160,6 +160,7 @@ $story = $result->fetch_assoc();
     <input type="radio" name="rating" value="5"> 5
     <button type="submit">Submit Rating</button>
 </form>
+<br>
 <?php else: ?>
 <p>You have rated this story, <a href="stories.php">Click Here</a> for more Stories</p>
 <?php endif; ?>

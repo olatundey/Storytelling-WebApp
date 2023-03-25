@@ -50,9 +50,9 @@ $usercategory = ($_SESSION['userType']);
         <div class="custom-text2">
         <label><strong>Hello, </strong><?php print $user; ?>!</label>
         </div>
-        <div id="background-picture" style="width: 100%; height: 100%;">
-                <img src="assets/images/welcome.png" alt="welcome-picture"/>
-              </div>
+        <!-- <div id="background-picture" > -->
+                <img src="assets/images/welcome.png" alt="welcome-picture" style="width: 100%; height: 100%;">
+              <!-- </div> -->
  
 
 
