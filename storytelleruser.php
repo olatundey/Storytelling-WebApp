@@ -26,6 +26,13 @@ $usercategory = ($_SESSION['userType']);
 
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3oeQSbb4oNhgeNqTBrdMlqyFSPD9Hg7s&callback=initMap"
     async defer></script>
+    <style>
+        .custom-text {
+            position: absolute;
+            top: 17%;
+            right: 2%;
+        }
+    </style>
             </head>
 
     <body>
@@ -62,13 +69,13 @@ $usercategory = ($_SESSION['userType']);
         <main>
         <hr>
 
-        <div class="custom-text2">
+        <div class="custom-text">
         <label><strong>Hello, </strong><?php print $user; ?>!</label><br>
         </div>
         <div class="login-register">
 
-        <label><strong><a href="editstory.php">My Stories</a></strong></label>
-        <h3>Upload Story</h3>
+        <label><strong>My Stories: <a href="editstory.php">Click Here</a></strong></label>
+        <h5>Upload Story</h5>
         <div class="userfeedback">
       
         <form class="contactinfo" action="uploadstory.php" method="post" enctype="multipart/form-data">

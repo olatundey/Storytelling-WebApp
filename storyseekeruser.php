@@ -20,7 +20,13 @@ $usercategory = ($_SESSION['userType']);
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">    
-      
+        <style>
+        .custom-text2 {
+  position: absolute;
+  top: 12.4%;
+  right: 2%;
+}
+  </style>
     </head>
 
     <body>

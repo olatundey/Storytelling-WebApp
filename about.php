@@ -74,9 +74,7 @@ $stmt->close();
         </header>
         <main>
         <hr>
-            <div id="background-picture" style="width: 100%; height: 100%;">
-                <img src="assets/images/about-page.png" alt="background-picture"/>
-              </div>
+                <img src="assets/images/about-page.png" alt="background-picture" style="width: 100%; height: 100%;">
               <hr>
         </main>
 
