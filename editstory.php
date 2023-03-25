@@ -46,6 +46,53 @@ $usercategory = ($_SESSION['userType']);
     $stmt->close();
   }
 
+  if (isset($_POST['update_location'])) {
+    $id = $_POST['storyid'];
+    $newloc = $_POST['newloc'];
+    
+    // Update the desc in the database
+    $update_query5 = "UPDATE stories SET location = ? WHERE id = ?";
+    $stmt = $conn->prepare($update_query5);
+    $stmt->bind_param("si", $newloc, $id);
+    $stmt->execute();
+    $stmt->close();
+  }
+
+  if (isset($_POST['update_map'])) {
+    $id = $_POST['storyid'];
+    $newlat = $_POST['newlat'];
+    $newlng = $_POST['newlng'];
+    // Update the desc in the database
+    $update_query6 = "UPDATE stories SET latitude = ?, longitude = ? WHERE id = ?";
+    $stmt = $conn->prepare($update_query6);
+    $stmt->bind_param("ddi", $newlat, $newlng, $id);
+    $stmt->execute();
+    $stmt->close();
+  }
+  
+
+  if (isset($_POST['update_picture'])) {
+    $id = $_POST['storyid'];
+    // Handle picture upload
+    $picture = $_FILES['new_pict'];
+    $pictureName = $picture['name'];
+    $pictureTempName = $picture['tmp_name'];
+    $pictureError = $picture['error'];
+    if($pictureError === 0) {
+        $newpictureDestination = 'uploads/pictures/' . $pictureName;
+        move_uploaded_file($pictureTempName, $newpictureDestination);
+
+        // Update the picture in the database
+        $update_query4 = "UPDATE stories SET picture_data = ? WHERE id = ?";
+        $stmt = $conn->prepare($update_query4);
+        $stmt->bind_param("si", $newpictureDestination, $id);
+        $stmt->execute();
+        $stmt->close();
+    }
+}
+
+//
+
   if (isset($_POST['remove'])) {
     $storyid = $_POST['storyid'];
     // Delete the story with the given storyid from the stories table
@@ -131,6 +178,16 @@ $usercategory = ($_SESSION['userType']);
 
     <br>
     <div class="container">
+  <h6>Remove Story</h6>
+  <form class="contactinfo" method="POST" action="">
+    <label for="storyid">Story ID:</label>
+    <input type="text" name="storyid" id="storyid" required>
+    
+    <input type="submit" name="remove" value="Remove from Website">
+</form>
+</div>
+<br>
+    <div class="container">
   <h6>Change Story Title</h6>
   <form class="contactinfo" method="POST" action="">
     <label for="storyid">Story ID:</label>
@@ -157,14 +214,48 @@ $usercategory = ($_SESSION['userType']);
 </div>
 <br>
 <div class="container">
-  <h6>Remove Story</h6>
+  <h6>Change Story Picture</h6>
+  <form class="contactinfo" method="POST" action="" enctype="multipart/form-data">
+    <label for="storyid">Story ID:</label>
+    <input type="text" name="storyid" id="storyid" required>
+  
+    <label for="newpict">Story Picture:</label>
+    <input type="file" id="picture" name="new_pict" accept="image/*" required>
+    <input type="submit" name="update_picture" value="Change Picture">
+</form>
+</div>
+
+<br>
+<br>
+ <div class="container">
+  <h6>Change Location</h6>
   <form class="contactinfo" method="POST" action="">
     <label for="storyid">Story ID:</label>
     <input type="text" name="storyid" id="storyid" required>
-    
-    <input type="submit" name="remove" value="Remove from Website">
+  
+    <label for="newloc">Story Location:</label>
+    <input type="text" name="newloc" id="newloc" required>
+
+ 
+    <input type="submit" name="update_location" value="Change Story Location">
 </form>
 </div>
+<br>
+<div class="container">
+  <h6>Change Map View</h6>
+  <form class="contactinfo" method="POST" action="">
+    <label for="storyid">Story ID:</label>
+    <input type="text" name="storyid" id="storyid" required>
+<label for="latitude">Latitude:</label>
+  <input type="number" id="latitude" name="newlat" step="0.00000001" placeholder="+Latitude (+N,-S)">
+  <label for="longitude">Longitude:</label>
+  <input type="number" id="longitude" name="newlng" step="0.00000001" placeholder="-Longitude (-W,+E)">
+  <input type="submit" name="update_map" value="Change MapView">
+</form>
+</div>
+<br>
+
+
 		</main>
 
     <footer>
