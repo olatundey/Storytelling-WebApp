@@ -56,9 +56,13 @@ if (mysqli_num_rows($result) > 0) {
           }
         } else {
           echo "Invalid user category";
+          echo "<a href='login.html'>Return to Sign in</a><br>";
+
         }
       } else {
         echo "Invalid password";
+        echo "<a href='login.html'>Return to Sign in</a><br>";
+
       }
 } else {
   
