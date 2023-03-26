@@ -143,13 +143,25 @@ $result = $stmt->get_result();
         </main>
 
         <footer>
-            <hr>
-            <div class="container">
-                <li><a href = "contactus.php" class="nav-item">Contact Us</a></li>   
-
-            </div>
-            
-        </footer>
+                <hr>
+                <div class="container">
+                    <div class="col-md-12" id="footend">
+                        <div id="footercontainer" class="row">
+                            <section class="col-md-3.5">
+                                <h4>Tourview</h4>
+                                <p>Copyright &copy; 2023 All rights reserved.</p>
+                            </section>
+                            <section class="col-md-6">
+                            </section>
+                            <section class="col-md-2.5">
+                            <a href = "contactus.php" class="nav-item">Click Here to Contact Us</a><br>
+                            <a href="https://www.facebook.com/profile.php?id=100090483228208" class="fa fa-facebook"></a>
+                            <a href="https://twitter.com/Tourview_uk" class="fa fa-twitter"></a>
+                            </section>
+                        </div>  
+                    </div>
+                </div>       
+            </footer>
             
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
