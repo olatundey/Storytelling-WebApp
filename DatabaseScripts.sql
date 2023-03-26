@@ -26,6 +26,7 @@ CREATE TABLE stories (
   picture_data VARCHAR(255),
   video_data VARCHAR(255),
   audio_data VARCHAR(255),
+  username_st varchar(15) NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -44,18 +45,3 @@ email varchar(30) NOT NULL,
 subject varchar(60) NOT NULL,
 message TEXT NOT NULL
 );
-
-
--- CREATE TABLE removed_stories (
---   id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
---   source_name VARCHAR(255) NOT NULL,
---   story_title VARCHAR(255) NOT NULL,
---   category VARCHAR(15) NOT NULL,
---   description TEXT NOT NULL,
---   location VARCHAR(255),
---   latitude DECIMAL(10, 8) NOT NULL,
---   longitude DECIMAL(10, 8) NOT NULL,
---   picture_data BLOB,
---   video_data BLOB,
---   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
--- );
