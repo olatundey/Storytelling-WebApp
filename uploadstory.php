@@ -38,6 +38,16 @@ if(isset($_POST['submit'])) {
         move_uploaded_file($videoTempName, $videoDestination);
     }
 
+        // Handle audio upload
+        $audio = $_FILES['audio'];
+        $audioName = $audio['name'];
+        $audioTempName = $audio['tmp_name'];
+        $audioError = $audio['error'];
+        if($audioError === 0) {
+            $audioDestination = 'uploads/audio/' . $audioName;
+            move_uploaded_file($audioTempName, $audioDestination);
+        }
+
     // Save the user input and uploaded file paths to database
     // Connect to the database
     include_once("connection.php");
@@ -45,9 +55,9 @@ if(isset($_POST['submit'])) {
     $conn = new mysqli($servername, $username, $password, $dbname);
     
 // Prepare the SQL statement
-$stmt = $conn->prepare("INSERT INTO stories (source_name, story_title, description, location, latitude, longitude, picture_data, video_data,username_st,category) VALUES (?,?,?,?,?,?,?,?,?,?)");
+$stmt = $conn->prepare("INSERT INTO stories (source_name, story_title, description, location, latitude, longitude, picture_data, video_data, audio_data, username_st,category) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
 // Below properly format user input for insert and indicate the data types of the variables being bound to the placeholders
-$stmt->bind_param("ssssddssss", $source_name, $story_title, $description, $location, $latitude, $longitude, $pictureDestination, $videoDestination,$user,$storycategory);
+$stmt->bind_param("ssssddsssss", $source_name, $story_title, $description, $location, $latitude, $longitude, $pictureDestination, $videoDestination, $audioDestination, $user, $storycategory);
 
 // Execute the statement
 $stmt->execute();

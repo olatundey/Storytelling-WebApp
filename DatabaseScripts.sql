@@ -23,8 +23,9 @@ CREATE TABLE stories (
   location VARCHAR(255),
   latitude DECIMAL(10, 8) NOT NULL,
   longitude DECIMAL(10, 8) NOT NULL,
-  picture_data BLOB,
-  video_data BLOB,
+  picture_data VARCHAR(255),
+  video_data VARCHAR(255),
+  audio_data VARCHAR(255),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

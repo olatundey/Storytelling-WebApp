@@ -104,6 +104,9 @@ $usercategory = ($_SESSION['userType']);
 
     <label for="video">Video:</label>
     <input type="file" id="video" name="video" accept="video/*"><br>
+
+    <label for="audio">Audio:</label>
+    <input type="file" id="audio" name="audio" accept="audio/*"><br>
         
     <label for="story">Story Description:</label>
     <textarea id="description" name="description" rows="5" cols="30" required  wrap="soft" style="width: 100%;"></textarea><br>

@@ -8,10 +8,6 @@ if (Isset($_SESSION["user"])) { //user name must in session to stay here
 $usercategory = ($_SESSION['userType']);
 }
 
-// $latitude = $_POST['latitude'];
-// $longitude = $_POST['longitude'];
-
-// echo $latitude . $longitude;
 
 include_once("connection.php");
 // Create connection
@@ -131,6 +127,12 @@ $story = $result->fetch_assoc();
     <img src="<?php echo $story['picture_data']; ?>" style="width: 100%; height: 100%;" alt="Photo">
 <?php endif; ?></p>
 </div>
+<?php if (!empty($story['audio_data'])): ?>
+<div id="audio">
+<p>
+    <audio src="<?php echo $story['audio_data']; ?>" style="width: 100%;" controls></audio>
+    </div>
+<?php endif; ?></p>
 <h2><?php echo $story['story_title']; ?></h2>
 <?php if(isset($_SESSION['user'])) { ?>
 <p><strong>Average Rating:</strong> <?php echo number_format($avgRating, 1); ?> stars</p>
