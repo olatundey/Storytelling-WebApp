@@ -123,16 +123,14 @@ $story = $result->fetch_assoc();
     <hr>
     <?php if (!empty($story['picture_data'])): ?>
     <div id="img">
-<p>
     <img src="<?php echo $story['picture_data']; ?>" style="width: 100%; height: 100%;" alt="Photo">
-<?php endif; ?></p>
+<?php endif; ?>
 </div>
 <?php if (!empty($story['audio_data'])): ?>
 <div id="audio">
-<p>
     <audio src="<?php echo $story['audio_data']; ?>" style="width: 100%;" controls></audio>
     </div>
-<?php endif; ?></p>
+<?php endif; ?>
 <h2><?php echo $story['story_title']; ?></h2>
 <?php if(isset($_SESSION['user'])) { ?>
 <p><strong>Average Rating:</strong> <?php echo number_format($avgRating, 1); ?> stars</p>
@@ -142,10 +140,9 @@ $story = $result->fetch_assoc();
 <p><strong>Story description:<BR></strong> <?php echo $story['description']; ?></p><br><br>
 <?php if (!empty($story['video_data'])): ?>
 <div id="vid">
-<p>
     <video src="<?php echo $story['video_data']; ?>" style="width: 100%; height: 400px;" controls></video>
     </div>
-<?php endif; ?></p>
+<?php endif; ?>
 
 <!-- HTML code to display the map -->
 <div id="map" style="width: 100%; height: 400px;"></div>
